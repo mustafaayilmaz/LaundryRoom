@@ -30,7 +30,7 @@ const App = () => (
 		<IonReactRouter>
 			<IonRouterOutlet>
 				<Route exact path="/home">
-					<Home />
+					<Home title={'MERHABA DÜNYA'} />
 				</Route>
 				<Route exact path="/">
 					<Redirect to="/home" />
