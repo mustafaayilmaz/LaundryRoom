@@ -9,18 +9,17 @@ class Sepet {
 	 * @param {string} durum
 	 * @param {string} ekBilgi
 	 */
-	constructor(id, uid, program, derece, kurutmaVar, deterjanVar, durum, ekBilgi) {
+	constructor(id, uid, program, derece, kurutmaVar, deterjanVar, yumuşatıcıVar, durum, ekBilgi) {
 		this.id = id
 		this.uid = uid
 		this.program = program
 		this.derece = derece
 		this.kurutmaVar = kurutmaVar
 		this.deterjanVar = deterjanVar
+		this.yumuşatıcıVar = yumuşatıcıVar
 		this.durum = durum
 		this.ekBilgi = ekBilgi
 	}
-
-	// Branch oluştur
 
 	// TODO: Implement
 	get ücret() {}

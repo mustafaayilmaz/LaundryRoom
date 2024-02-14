@@ -1,23 +1,70 @@
+/**
+ *
+ * @param {number} minutes
+ */
+const convertMinutesToMilliSeconds = minutes => {
+	return minutes * 60_000
+}
+
+const sentetik = {
+	value: 'sentetik',
+	label: 'Sentetik (2.5 Saat)',
+	duration: convertMinutesToMilliSeconds(150)
+}
+
+const mix = {
+	value: 'mix',
+	label: 'Mix (2 Saat)',
+	duration: convertMinutesToMilliSeconds(120)
+}
+
+const pamuklu = {
+	value: 'pamuklu',
+	label: 'Pamuklu (3 Saat)',
+	duration: convertMinutesToMilliSeconds(180)
+}
+
 export const yıkamaProgramları = {
 	sentetik,
 	mix,
 	pamuklu
 }
 
-// Todo: programların default derece devri olsun. Derece devir farklı isteyen ek bilgi ile versin
-const sentetik = {}
+export const sıcaklıklar = [
+	{ value: 30, label: '30°' },
+	{ value: 40, label: '40°' },
+	{ value: 60, label: '60°' }
+]
 
-const mix = {}
+// Todo: Kurutma programlarının sürelerini düzenle
 
-const pamuklu = {}
-
-/**
- *
- * @param {number} minutes
- */
-const convertToMilliSeconds = minutes => {
-	return minutes * 60_000
+const pamukluDolapKuruluğu = {
+	value: 'pamukluDolapKuruluğu',
+	label: 'Pamuklu D. Kuruluğu (3 Saat)',
+	duration: convertMinutesToMilliSeconds(180)
 }
 
-// Todo: Kurutma programlarını ekle
-export const kurutmaProgramları = {}
+const sentetikDolapKuruluğu = {
+	value: 'sentetikDolapKuruluğu',
+	label: 'Sentetik D. Kuruluğu (3 Saat)',
+	duration: convertMinutesToMilliSeconds(180)
+}
+
+const spor = {
+	value: 'spor',
+	label: 'Spor (3 Saat)',
+	duration: convertMinutesToMilliSeconds(180)
+}
+
+const karışık = {
+	value: 'Karışık',
+	label: 'Karışık (3 Saat)',
+	duration: convertMinutesToMilliSeconds(180)
+}
+
+export const kurutmaProgramları = {
+	pamukluDolapKuruluğu,
+	sentetikDolapKuruluğu,
+	spor,
+	karışık
+}
