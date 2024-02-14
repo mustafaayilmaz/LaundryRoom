@@ -20,6 +20,8 @@ class Sepet {
 		this.ekBilgi = ekBilgi
 	}
 
+	// Branch oluştur
+
 	// TODO: Implement
 	get ücret() {}
 }
