@@ -9,10 +9,11 @@ class Sepet {
 	 * @param {string} durum
 	 * @param {string} ekBilgi
 	 */
-	constructor(id, uid, program, kurutmaVar, deterjanVar, durum, ekBilgi) {
+	constructor(id, uid, program, derece, kurutmaVar, deterjanVar, durum, ekBilgi) {
 		this.id = id
 		this.uid = uid
 		this.program = program
+		this.derece = derece
 		this.kurutmaVar = kurutmaVar
 		this.deterjanVar = deterjanVar
 		this.durum = durum
