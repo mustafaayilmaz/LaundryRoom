@@ -1,3 +1,4 @@
+import { Camera, CameraResultType } from '@capacitor/camera'
 import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react'
 
 import React, { useState } from 'react'
@@ -12,6 +13,16 @@ export const Queue = () => {
 	const [isYumuşatıcı, setIsYumuşatıcı] = useState(false)
 	const [isDeterjan, setIsDeterjan] = useState(false)
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
+
+	const takePicture = async () => {
+		const image = await Camera.getPhoto({
+			quality: 90,
+			allowEditing: true,
+			resultType: CameraResultType.Uri
+		})
+		var imageUrl = image.webPath
+		imageElement.src = imageUrl
+	}
 
 	const toggleKurutma = () => {
 		setIsKurutma(!isKurutma)
@@ -122,6 +133,9 @@ export const Queue = () => {
 									<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 								</IonItem>
 							</IonList>
+							<IonButton expand="block" onClick={() => takePicture()}>
+								Fotoğraf
+							</IonButton>
 
 							<IonButton expand="block" type="submit">
 								Çamaşır Talebi Yolla
