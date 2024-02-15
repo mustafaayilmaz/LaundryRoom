@@ -46,19 +46,19 @@ const pamukluDolapKuruluğu = {
 
 const sentetikDolapKuruluğu = {
 	value: 'sentetikDolapKuruluğu',
-	label: 'Sentetik D. Kuruluğu (3 Saat)',
+	label: 'Sentetik D. Kuruluğu (2 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const spor = {
 	value: 'spor',
-	label: 'Spor (3 Saat)',
+	label: 'Spor (2 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const karışık = {
 	value: 'Karışık',
-	label: 'Karışık (3 Saat)',
+	label: 'Karışık (2.5 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
