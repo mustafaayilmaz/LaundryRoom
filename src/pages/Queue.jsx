@@ -1,4 +1,4 @@
-import { Camera, CameraResultType } from '@capacitor/camera'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react'
 
 import React, { useState } from 'react'
@@ -18,8 +18,10 @@ export const Queue = () => {
 		const image = await Camera.getPhoto({
 			quality: 90,
 			allowEditing: true,
-			resultType: CameraResultType.Uri
+			resultType: CameraResultType.Uri,
+			source: CameraSource.Camera
 		})
+
 		var imageUrl = image.webPath
 		imageElement.src = imageUrl
 	}
