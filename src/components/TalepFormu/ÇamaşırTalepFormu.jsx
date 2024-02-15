@@ -14,11 +14,19 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		register,
 		handleSubmit,
 		clearErrors,
+		setValue,
 		reset,
 		formState: { errors }
-	} = useForm()
+	} = useForm({
+		defaultValues: {
+			yumuşatıcıVar: false,
+			deterjanVar: false
+		}
+	})
 
-	const onSubmit = data => console.log(data)
+	const onSubmit = data => {
+		console.log(data)
+	}
 
 	const takePicture = async () => {
 		const image = await Camera.getPhoto({
@@ -52,7 +60,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 					<Kurutma errors={errors} clearErrors={clearErrors} register={register} setToplamÜcret={setToplamÜcret} toplamÜcret={toplamÜcret} />
 
-					<EkBilgiler register={register} toplamÜcret={toplamÜcret} setToplamÜcret={setToplamÜcret} />
+					<EkBilgiler setValue={setValue} register={register} toplamÜcret={toplamÜcret} setToplamÜcret={setToplamÜcret} />
 
 					<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 

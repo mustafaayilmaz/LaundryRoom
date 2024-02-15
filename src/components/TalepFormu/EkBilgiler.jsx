@@ -2,7 +2,7 @@ import { IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonToggle } 
 import { useState } from 'react'
 import { ücret } from '../../types/ücret'
 
-export default function EkBilgiler({ register, toplamÜcret, setToplamÜcret }) {
+export default function EkBilgiler({ register, setValue, toplamÜcret, setToplamÜcret }) {
 	const [isYumuşatıcı, setIsYumuşatıcı] = useState(false)
 	const [isDeterjan, setIsDeterjan] = useState(false)
 
@@ -29,12 +29,22 @@ export default function EkBilgiler({ register, toplamÜcret, setToplamÜcret }) 
 				<IonLabel>Ek Bilgiler</IonLabel>
 			</IonItemDivider>
 			<IonItem>
-				<IonToggle onIonChange={toggleDeterjan} {...register('deterjanVar')}>
+				<IonToggle
+					onIonChange={e => {
+						setValue('deterjanVar', e.detail.checked)
+						toggleDeterjan()
+					}}
+				>
 					Şahsi Deterjan
 				</IonToggle>
 			</IonItem>
 			<IonItem>
-				<IonToggle onIonChange={toggleYumuşatıcı} {...register('yumuşatıcıVar')}>
+				<IonToggle
+					onIonChange={e => {
+						setValue('yumuşatıcıVar', e.detail.checked)
+						toggleYumuşatıcı()
+					}}
+				>
 					Şahsi Yumuşatıcı
 				</IonToggle>
 			</IonItem>
