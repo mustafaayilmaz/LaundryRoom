@@ -1,6 +1,8 @@
 export const ücret = {
-	taban: 3,
-	kurutma: 2,
-	deterjan: 2,
-	yumuşatıcı: 2
+	taban: 5,
+	kurutma: 3,
+	deterjan: -3,
+	// Eğer kullanıcının kendi deterjanı varsa yıkma ücretinden -3₺ olacak. Fiyatlar belirlenince düzenle
+	// Yumuşatıcının ücretle herhangi bir alakası olmayacak
+	yumuşatıcı: 0
 }
