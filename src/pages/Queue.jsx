@@ -122,7 +122,10 @@ export const Queue = () => {
 									<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 								</IonItem>
 							</IonList>
-							<IonButton type="submit">Çamaşır Talebini Yolla</IonButton>
+
+							<IonButton expand="block" type="submit">
+								Çamaşır Talebi Yolla
+							</IonButton>
 						</form>
 					</IonContent>
 				</IonModal>
