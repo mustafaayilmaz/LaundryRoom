@@ -1,4 +1,5 @@
-import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react'
+
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Authorized from '../layouts/Authorized'
@@ -62,40 +63,56 @@ export const Queue = () => {
 					<IonContent className="ion-padding">
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<IonList>
-								<IonItem>
-									<IonSelect label="Yıkama Programı" labelPlacement="floating" onIonChange={e => console.log(yıkamaProgramları[e.detail.value])} {...register('yıkamaProgramı')}>
-										{Object.values(yıkamaProgramları).map(program => (
-											<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
-										))}
-									</IonSelect>
-								</IonItem>
-								<IonItem>
-									<IonSelect label="Yıkama Sıcaklığı" labelPlacement="floating" onIonChange={e => console.log(e.detail.value)}>
-										{sıcaklıklar.map(sıcaklık => (
-											<IonSelectOption value={sıcaklık.value}>{sıcaklık.label}</IonSelectOption>
-										))}
-									</IonSelect>
-								</IonItem>
-								<IonItem>
-									<IonToggle onIonChange={toggleKurutma}>Kurutma</IonToggle>
-								</IonItem>
-								<IonItem>
-									<IonSelect label="Kurutma Programı" labelPlacement="floating" disabled={!isKurutma} onIonChange={e => console.log(kurutmaProgramları[e.detail.value])}>
-										{Object.values(kurutmaProgramları).map(program => (
-											<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
-										))}
-									</IonSelect>
-								</IonItem>
-								<IonItem>
-									<IonToggle onIonChange={toggleDeterjan}>Şahsi Deterjan</IonToggle>
-								</IonItem>
-								<IonItem>
-									<IonToggle onIonChange={toggleYumuşatıcı}>Şahsi Yumuşatıcı</IonToggle>
-								</IonItem>
-								<IonItem>
-									<IonInput label="Ek Talep" labelPlacement="floating" placeholder="Ek Taleplerinizi Yazabilirsiniz"></IonInput>
-								</IonItem>
-								<IonItem>
+								<IonItemGroup>
+									<IonItemDivider>
+										<IonLabel>Yıkama</IonLabel>
+									</IonItemDivider>
+
+									<IonItem>
+										<IonSelect label="Yıkama Programı" labelPlacement="floating" onIonChange={e => console.log(yıkamaProgramları[e.detail.value])} {...register('yıkamaProgramı')}>
+											{Object.values(yıkamaProgramları).map(program => (
+												<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
+											))}
+										</IonSelect>
+									</IonItem>
+									<IonItem lines="none">
+										<IonSelect label="Yıkama Sıcaklığı" labelPlacement="floating" onIonChange={e => console.log(e.detail.value)}>
+											{sıcaklıklar.map(sıcaklık => (
+												<IonSelectOption value={sıcaklık.value}>{sıcaklık.label}</IonSelectOption>
+											))}
+										</IonSelect>
+									</IonItem>
+								</IonItemGroup>
+								<IonItemGroup>
+									<IonItemDivider>
+										<IonLabel>Kurutma</IonLabel>
+									</IonItemDivider>
+									<IonItem>
+										<IonToggle onIonChange={toggleKurutma}>Kurutma</IonToggle>
+									</IonItem>
+									<IonItem>
+										<IonSelect label="Kurutma Programı" labelPlacement="floating" disabled={!isKurutma} onIonChange={e => console.log(kurutmaProgramları[e.detail.value])}>
+											{Object.values(kurutmaProgramları).map(program => (
+												<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
+											))}
+										</IonSelect>
+									</IonItem>
+								</IonItemGroup>
+								<IonItemGroup>
+									<IonItemDivider>
+										<IonLabel>Ek Bilgiler</IonLabel>
+									</IonItemDivider>
+									<IonItem>
+										<IonToggle onIonChange={toggleDeterjan}>Şahsi Deterjan</IonToggle>
+									</IonItem>
+									<IonItem>
+										<IonToggle onIonChange={toggleYumuşatıcı}>Şahsi Yumuşatıcı</IonToggle>
+									</IonItem>
+									<IonItem>
+										<IonInput label="Ek Talep" labelPlacement="floating" placeholder="Ek Taleplerinizi Yazabilirsiniz"></IonInput>
+									</IonItem>
+								</IonItemGroup>
+								<IonItem lines="none">
 									<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 								</IonItem>
 							</IonList>
