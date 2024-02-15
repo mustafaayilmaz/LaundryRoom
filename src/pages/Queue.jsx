@@ -83,14 +83,18 @@ export const Queue = () => {
 								<IonItem>
 									<IonSelect label="Yıkama Programı" labelPlacement="floating" onIonChange={e => console.log(yıkamaProgramları[e.detail.value])} {...register('yıkamaProgramı')}>
 										{Object.values(yıkamaProgramları).map(program => (
-											<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
+											<IonSelectOption key={program.value} value={program.value}>
+												{program.label}
+											</IonSelectOption>
 										))}
 									</IonSelect>
 								</IonItem>
 								<IonItem lines="none">
 									<IonSelect label="Yıkama Sıcaklığı" labelPlacement="floating" onIonChange={e => console.log(e.detail.value)}>
 										{sıcaklıklar.map(sıcaklık => (
-											<IonSelectOption value={sıcaklık.value}>{sıcaklık.label}</IonSelectOption>
+											<IonSelectOption key={sıcaklık.value} value={sıcaklık.value}>
+												{sıcaklık.label}
+											</IonSelectOption>
 										))}
 									</IonSelect>
 								</IonItem>
@@ -107,7 +111,9 @@ export const Queue = () => {
 								<IonItem>
 									<IonSelect label="Kurutma Programı" labelPlacement="floating" disabled={!isKurutma} onIonChange={e => console.log(kurutmaProgramları[e.detail.value])}>
 										{Object.values(kurutmaProgramları).map(program => (
-											<IonSelectOption value={program.value}>{program.label}</IonSelectOption>
+											<IonSelectOption key={program.value} value={program.value}>
+												{program.label}
+											</IonSelectOption>
 										))}
 									</IonSelect>
 								</IonItem>
@@ -117,14 +123,10 @@ export const Queue = () => {
 									<IonLabel>Ek Bilgiler</IonLabel>
 								</IonItemDivider>
 								<IonItem>
-									<IonToggle style={{ height: '56px' }} onIonChange={toggleDeterjan}>
-										Şahsi Deterjan
-									</IonToggle>
+									<IonToggle onIonChange={toggleDeterjan}>Şahsi Deterjan</IonToggle>
 								</IonItem>
 								<IonItem>
-									<IonToggle style={{ height: '56px' }} onIonChange={toggleYumuşatıcı}>
-										Şahsi Yumuşatıcı
-									</IonToggle>
+									<IonToggle onIonChange={toggleYumuşatıcı}>Şahsi Yumuşatıcı</IonToggle>
 								</IonItem>
 								<IonItem>
 									<IonInput label="Ek Talep" labelPlacement="floating" placeholder="Ek Taleplerinizi Yazabilirsiniz"></IonInput>
