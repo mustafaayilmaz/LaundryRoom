@@ -88,7 +88,9 @@ export const Queue = () => {
 										<IonLabel>Kurutma</IonLabel>
 									</IonItemDivider>
 									<IonItem>
-										<IonToggle onIonChange={toggleKurutma}>Kurutma</IonToggle>
+										<IonToggle style={{ height: '56px' }} onIonChange={toggleKurutma}>
+											Kurutma
+										</IonToggle>
 									</IonItem>
 									<IonItem>
 										<IonSelect label="Kurutma Programı" labelPlacement="floating" disabled={!isKurutma} onIonChange={e => console.log(kurutmaProgramları[e.detail.value])}>
@@ -103,10 +105,14 @@ export const Queue = () => {
 										<IonLabel>Ek Bilgiler</IonLabel>
 									</IonItemDivider>
 									<IonItem>
-										<IonToggle onIonChange={toggleDeterjan}>Şahsi Deterjan</IonToggle>
+										<IonToggle style={{ height: '56px' }} onIonChange={toggleDeterjan}>
+											Şahsi Deterjan
+										</IonToggle>
 									</IonItem>
 									<IonItem>
-										<IonToggle onIonChange={toggleYumuşatıcı}>Şahsi Yumuşatıcı</IonToggle>
+										<IonToggle style={{ height: '56px' }} onIonChange={toggleYumuşatıcı}>
+											Şahsi Yumuşatıcı
+										</IonToggle>
 									</IonItem>
 									<IonItem>
 										<IonInput label="Ek Talep" labelPlacement="floating" placeholder="Ek Taleplerinizi Yazabilirsiniz"></IonInput>
