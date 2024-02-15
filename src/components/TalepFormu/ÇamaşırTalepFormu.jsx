@@ -1,7 +1,8 @@
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
-import { IonButton, IonButtons, IonContent, IonHeader, IonModal, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonCol, IonContent, IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import camasir_sepeti from '../../../public/camasir_sepeti.png'
 import { ücret } from '../../types/ücret'
 import EkBilgiler from './EkBilgiler'
 import Kurutma from './Kurutma'
@@ -52,9 +53,11 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 			</IonHeader>
 			<IonContent className="ion-padding">
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<IonButton expand="block" onClick={() => takePicture()}>
-						Fotoğraf
-					</IonButton>
+					<IonRow>
+						<IonCol style={{ display: 'flex', justifyContent: 'center' }}>
+							<img style={{ width: '125px', height: 'auto' }} onClick={() => takePicture()} src={camasir_sepeti} />
+						</IonCol>
+					</IonRow>
 
 					<Yıkama errors={errors} clearErrors={clearErrors} register={register} />
 
