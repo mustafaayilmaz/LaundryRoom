@@ -43,7 +43,6 @@ export const Tabs = ({ formatMessage }) => {
 					<IonLabel>{formatMessage('Clothes')}</IonLabel>
 					<IonIcon icon={bagOutline} />
 				</IonTabButton>
-
 				<IonTabButton tab="profile" href="/profile" selected={link.pathname == '/profile'}>
 					<IonLabel>{formatMessage('Profile')}</IonLabel>
 					<IonIcon icon={personOutline} />
