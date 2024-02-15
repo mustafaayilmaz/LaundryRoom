@@ -14,6 +14,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		register,
 		handleSubmit,
 		clearErrors,
+		reset,
 		formState: { errors }
 	} = useForm()
 
@@ -32,7 +33,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	}
 
 	return (
-		<IonModal isOpen={isOpen}>
+		<IonModal isOpen={isOpen} onIonModalDidDismiss={reset}>
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle>Çamaşır Talebi Oluşturma</IonTitle>
