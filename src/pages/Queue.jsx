@@ -1,10 +1,12 @@
 import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonCard, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
-import { addOutline, apertureOutline, calendarClearOutline, checkmarkOutline, close, closeOutline, personOutline, thermometerOutline, timeOutline, waterOutline } from 'ionicons/icons'
-import camasir_sepeti from '../../public/camasir_sepeti.jpeg'
+import { addOutline, apertureOutline, calendarClearOutline, checkmarkOutline, closeOutline, personOutline, thermometerOutline, timeOutline, waterOutline } from 'ionicons/icons'
+import camasir_sepeti from '/camasir_sepeti.png'
 
 import React, { useState } from 'react'
+import TalebeSepet from '../components/Sepet/TalebeSepet'
 import ÇamaşırTalepFormu from '../components/TalepFormu/ÇamaşırTalepFormu'
 import Authorized from '../layouts/Authorized'
+import { kurutmaYok, örnekSepet } from '../types/sepet'
 
 export const Queue = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -15,66 +17,9 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
-			<IonCard className="ion-align-items-center">
-				<IonGrid>
-					<IonRow className="ion-justify-content-center ion-align-items-center">
-						<IonCol size="5" push=".5">
-							<img src={camasir_sepeti} width={'75%'} height={'75%'} />
-						</IonCol>
+			<TalebeSepet sepet={örnekSepet} />
 
-						<IonCol size="7">
-							<IonChip>
-								<IonIcon icon={calendarClearOutline}></IonIcon>
-								<IonLabel>15.02.2024</IonLabel>
-								<IonIcon icon={timeOutline} className="ion-padding-start"></IonIcon>
-								<IonLabel>19:00</IonLabel>
-							</IonChip>
-
-							<IonChip>
-								<IonIcon icon={waterOutline}></IonIcon>
-								<IonLabel>Pamuklu</IonLabel>
-								<IonIcon icon={thermometerOutline} className="ion-padding-start"></IonIcon>
-								<IonLabel>40°</IonLabel>
-							</IonChip>
-							<IonChip>
-								<IonIcon icon={apertureOutline}></IonIcon>
-								<IonLabel>Sentetik Dolap Kuruluğu</IonLabel>
-							</IonChip>
-
-							<IonChip>Makinede</IonChip>
-						</IonCol>
-					</IonRow>
-				</IonGrid>
-			</IonCard>
-			<IonCard className="ion-align-items-center">
-				<IonGrid>
-					<IonRow className="ion-justify-content-center ion-align-items-center">
-						<IonCol size="5" push=".5">
-							<img src={camasir_sepeti} width={'75%'} height={'75%'} />
-						</IonCol>
-						<IonCol size="7">
-							<IonChip>
-								<IonIcon icon={calendarClearOutline}></IonIcon>
-								<IonLabel>15.02.2024</IonLabel>
-								<IonIcon icon={timeOutline} className="ion-padding-start"></IonIcon>
-								<IonLabel>19:00</IonLabel>
-							</IonChip>
-
-							<IonChip>
-								<IonIcon icon={waterOutline}></IonIcon>
-								<IonLabel>Pamuklu</IonLabel>
-								<IonIcon icon={thermometerOutline} className="ion-padding-start"></IonIcon>
-								<IonLabel>40°</IonLabel>
-							</IonChip>
-							<IonChip>
-								<IonIcon icon={apertureOutline}></IonIcon>
-								<IonLabel>Kurutma</IonLabel>
-								<IonIcon icon={close} className="ion-padding-start"></IonIcon>
-							</IonChip>
-						</IonCol>
-					</IonRow>
-				</IonGrid>
-			</IonCard>
+			<TalebeSepet sepet={kurutmaYok} />
 
 			<p>Çamaşırcı</p>
 

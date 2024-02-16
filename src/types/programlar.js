@@ -40,13 +40,13 @@ export const sıcaklıklar = [
 
 const pamukluDolapKuruluğu = {
 	value: 'pamukluDolapKuruluğu',
-	label: 'Pamuklu D. Kuruluğu (3 Saat)',
+	label: 'Pamuklu Dolap Kuruluğu (3 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const sentetikDolapKuruluğu = {
 	value: 'sentetikDolapKuruluğu',
-	label: 'Sentetik D. Kuruluğu (2 Saat)',
+	label: 'Sentetik Dolap Kuruluğu (2 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
@@ -57,7 +57,7 @@ const spor = {
 }
 
 const karışık = {
-	value: 'Karışık',
+	value: 'karışık',
 	label: 'Karışık (2.5 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }

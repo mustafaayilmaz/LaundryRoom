@@ -35,7 +35,7 @@ export default function EkBilgiler({ register, setValue, toplamÜcret, setToplam
 						toggleDeterjan()
 					}}
 				>
-					Şahsi Deterjan
+					Deterjanım var
 				</IonToggle>
 			</IonItem>
 			<IonItem>
@@ -45,7 +45,7 @@ export default function EkBilgiler({ register, setValue, toplamÜcret, setToplam
 						toggleYumuşatıcı()
 					}}
 				>
-					Şahsi Yumuşatıcı
+					Yumuşatıcım var
 				</IonToggle>
 			</IonItem>
 			<IonItem>
