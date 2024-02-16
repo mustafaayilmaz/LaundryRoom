@@ -56,7 +56,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 							<IonLabel>Ek Bilgiler</IonLabel>
 						</IonItem>
 						<div className="ion-padding" slot="content">
-							şsdkşsdfjdsflkdsflkjdsfjlkdsfjkldsfjkldsfjlksdfjlksdfljklkjfdsdsffsdfasfıojpsfdogspdofıvmsdopfgusdopfgusdpofgudsopıfu
+							{sepet.ekBilgi}
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>

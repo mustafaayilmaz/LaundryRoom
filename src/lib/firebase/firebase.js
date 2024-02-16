@@ -6,7 +6,7 @@ import { firebaseConfig } from './config'
 
 fb.initializeApp(firebaseConfig)
 
-class Firebase {
+export class Firebase {
 	constructor() {
 		this.firestore = fb.firestore()
 	}
