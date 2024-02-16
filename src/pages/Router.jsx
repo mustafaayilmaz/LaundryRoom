@@ -5,7 +5,10 @@ import { useRecoilState } from 'recoil'
 
 import Tabs from '../layouts/Tabs'
 
+import { IonRouterOutlet } from '@ionic/react'
 import { useIntl } from 'react-intl'
+import { Redirect, Route } from 'react-router'
+import Login from './Login'
 
 export const Router = () => {
 	const [user, setUser] = useRecoilState(userState)
@@ -13,6 +16,26 @@ export const Router = () => {
 	const intl = useIntl()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
-	return <Tabs formatMessage={formatMessage} />
+	return (
+		<IonRouterOutlet>
+			{user ? (
+				<>
+					<Route exact path={['/', '/login', '/profile', '/clothes']}>
+						<Redirect to="/home" />
+					</Route>
+					<Tabs formatMessage={formatMessage} />
+				</>
+			) : (
+				<>
+					<Route path="/">
+						<Redirect to="/login" />
+					</Route>
+					<Route exact path="/login">
+						<Login />
+					</Route>
+				</>
+			)}
+		</IonRouterOutlet>
+	)
 }
 export default Router

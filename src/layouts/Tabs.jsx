@@ -14,7 +14,6 @@ import Profile from '../pages/Profile'
 import Queue from '../pages/Queue'
 
 import { useLocation } from 'react-router-dom'
-import Login from '../pages/Login'
 
 export const Tabs = ({ formatMessage }) => {
 	const [user, setUser] = useRecoilState(userState)
@@ -27,7 +26,6 @@ export const Tabs = ({ formatMessage }) => {
 				<Route path="/queue" render={() => <Queue formatMessage={formatMessage} />} exact={true} />
 				<Route path="/clothes" render={() => <Clothes formatMessage={formatMessage} />} exact={true} />
 				<Route path="/profile" render={() => <Profile formatMessage={formatMessage} />} exact={true} />
-				<Route path="/login" render={() => <Login formatMessage={formatMessage} />} exact={true} />
 			</IonRouterOutlet>
 
 			<IonTabBar slot="bottom">

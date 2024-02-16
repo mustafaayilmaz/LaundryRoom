@@ -21,11 +21,16 @@ import Locales from './lang'
 import Router from './pages/Router'
 
 import { IntlProvider } from 'react-intl'
+import { useRecoilValue } from 'recoil'
+import userState from './atoms/user'
 
 setupIonicReact()
 
 const App = () => {
+	const user = useRecoilValue(userState)
+
 	const locale = Locales['tr']
+
 	return (
 		<IonApp>
 			<IntlProvider locale={locale.code} messages={locale.messages} onError={error => error.code === 'MISSING_TRANSLATION'} defaultLocale="tr">
