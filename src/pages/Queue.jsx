@@ -1,12 +1,12 @@
-import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonCard, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
-import { addOutline, apertureOutline, calendarClearOutline, checkmarkOutline, closeOutline, personOutline, thermometerOutline, timeOutline, waterOutline } from 'ionicons/icons'
-import camasir_sepeti from '/camasir_sepeti.png'
+import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonChip, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { addOutline, apertureOutline, checkmarkOutline, closeOutline, personOutline, thermometerOutline, waterOutline } from 'ionicons/icons'
 
 import React, { useState } from 'react'
 import TalebeSepet from '../components/Sepet/TalebeSepet'
+import ÇamaşırcıSepet from '../components/Sepet/ÇamaşırcıSepet'
 import ÇamaşırTalepFormu from '../components/TalepFormu/ÇamaşırTalepFormu'
 import Authorized from '../layouts/Authorized'
-import { kurutmaYok, örnekSepet } from '../types/sepet'
+import { örnekSepetler } from '../types/sepet'
 
 export const Queue = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -17,39 +17,15 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
-			<TalebeSepet sepet={örnekSepet} />
-
-			<TalebeSepet sepet={kurutmaYok} />
+			{örnekSepetler.map((sepet, i) => (
+				<TalebeSepet key={i} sepet={sepet} />
+			))}
 
 			<p>Çamaşırcı</p>
 
-			<IonCard
-				className="ion-align-items-center"
-				onClick={() => {
-					setIsSepetOpen(true)
-				}}
-			>
-				<IonGrid>
-					<IonRow className="ion-justify-content-center ion-align-items-center">
-						<IonCol size="5" push=".5">
-							<img src={camasir_sepeti} width={'75%'} height={'75%'} />
-						</IonCol>
-						<IonCol size="7">
-							<IonChip>
-								<IonIcon icon={calendarClearOutline}></IonIcon>
-								<IonLabel>15.02.2024</IonLabel>
-								<IonIcon icon={timeOutline} className="ion-padding-start"></IonIcon>
-								<IonLabel>19:00</IonLabel>
-							</IonChip>
-
-							<IonChip>
-								<IonIcon icon={personOutline}></IonIcon>
-								<IonLabel>Talebe No: 1</IonLabel>
-							</IonChip>
-						</IonCol>
-					</IonRow>
-				</IonGrid>
-			</IonCard>
+			{örnekSepetler.map((sepet, i) => (
+				<ÇamaşırcıSepet key={i} sepet={sepet} />
+			))}
 
 			<IonModal isOpen={isSepetOpen}>
 				<IonHeader>
