@@ -9,9 +9,15 @@ import TarihChip from './helper/TarihChip'
  *
  * @param {{sepet: Sepet}} param0
  */
-export default function ÇamaşırcıSepet({ sepet }) {
+export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedSepet }) {
 	return (
-		<IonCard className="ion-align-items-center">
+		<IonCard
+			className="ion-align-items-center"
+			onClick={() => {
+				setIsSepetOpen(true)
+				setSelectedSepet(sepet)
+			}}
+		>
 			<IonGrid>
 				<IonRow className="ion-justify-content-center ion-align-items-center">
 					<IonCol size="5" push=".5">

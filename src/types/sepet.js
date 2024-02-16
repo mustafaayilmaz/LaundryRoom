@@ -40,7 +40,7 @@ const durum = {
 	bitti: 'Bitti'
 }
 
-const örnekSepet = new Sepet('id', '120', yıkamaProgramları.pamuklu, new Date(), '30', kurutmaProgramları.sentetikDolapKuruluğu, true, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
-const kurutmaYok = new Sepet('id', '120', yıkamaProgramları.pamuklu, new Date(), '30', null, false, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
+const örnekSepet = new Sepet('595', '982', yıkamaProgramları.pamuklu, new Date(), '30', kurutmaProgramları.sentetikDolapKuruluğu, true, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
+const kurutmaYok = new Sepet('1165', '77', yıkamaProgramları.sentetik, new Date(), '40', null, false, false, true, durum.makinede, '')
 
 export const örnekSepetler = [örnekSepet, kurutmaYok]

@@ -14,8 +14,6 @@ import YıkamaChip from './helper/YıkamaChip'
  * @returns
  */
 export default function TalebeSepet({ sepet }) {
-	console.log(sepet)
-
 	return (
 		<IonCard className="ion-align-items-center">
 			<IonGrid>
