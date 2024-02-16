@@ -6,8 +6,13 @@ import { firebaseConfig } from './config'
 
 fb.initializeApp(firebaseConfig)
 
-export class Firebase {
+class Firebase {
 	constructor() {
 		this.firestore = fb.firestore()
+		this.auth = fb.auth()
 	}
 }
+
+const firebaseClient = new Firebase()
+
+export default firebaseClient

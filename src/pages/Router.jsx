@@ -1,26 +1,34 @@
 import React from 'react'
-import { userState } from '../atoms/user'
-
-import { useRecoilState } from 'recoil'
 
 import Tabs from '../layouts/Tabs'
 
-import { IonRouterOutlet } from '@ionic/react'
+import { IonContent, IonPage, IonRouterOutlet } from '@ionic/react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { useIntl } from 'react-intl'
 import { Redirect, Route } from 'react-router'
+import firebaseClient from '../lib/firebase/firebase'
 import Login from './Login'
 
 export const Router = () => {
-	const [user, setUser] = useRecoilState(userState)
+	const [user, loading, error] = useAuthState(firebaseClient.auth)
 
 	const intl = useIntl()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
+
+	if (loading) {
+		return (
+			<IonPage>
+				<IonContent>Loading</IonContent>
+			</IonPage>
+		)
+	}
+
 	return (
 		<IonRouterOutlet>
 			{user ? (
 				<>
-					<Route exact path={['/', '/login', '/profile', '/clothes']}>
+					<Route exact path={['/', '/login', '/profile', '/clothes', '/home']}>
 						<Redirect to="/home" />
 					</Route>
 					<Tabs formatMessage={formatMessage} />
