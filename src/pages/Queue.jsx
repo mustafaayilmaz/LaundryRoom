@@ -1,15 +1,22 @@
 import { IonFab, IonFabButton, IonIcon } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
-
 import React, { useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 import TalebeSepet from '../components/Sepet/TalebeSepet'
 import ÇamaşırcıSepet from '../components/Sepet/ÇamaşırcıSepet'
 import ÇamaşırcıSepetModal from '../components/Sepet/ÇamaşırcıSepetModal'
 import ÇamaşırTalepFormu from '../components/TalepFormu/ÇamaşırTalepFormu'
 import Authorized from '../layouts/Authorized'
+import firebaseClient from '../lib/firebase/firebase'
 import { örnekSepetler } from '../types/sepet'
 
 export const Queue = () => {
+	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
+	const [sepetler, loading, error, snapshot] = useCollectionDataOnce(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
+
+	console.log(sepetler)
+
 	const [isOpen, setIsOpen] = useState(false)
 
 	const [selectedSepet, setSelectedSepet] = useState({})
@@ -18,9 +25,7 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
-			{örnekSepetler.map((sepet, i) => (
-				<TalebeSepet key={i} sepet={sepet} />
-			))}
+			{sepetler && sepetler.map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)}
 
 			<p>Çamaşırcı</p>
 

@@ -23,7 +23,7 @@ export default function TalebeSepet({ sepet }) {
 					</IonCol>
 
 					<IonCol size="7">
-						<TarihChip tarih={sepet.tarih} />
+						<TarihChip tarih={new Date(sepet.tarih)} />
 
 						<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.derece} />
 

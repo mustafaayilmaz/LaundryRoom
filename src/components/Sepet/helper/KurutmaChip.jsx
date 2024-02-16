@@ -6,7 +6,7 @@ export default function KurutmaChip({ kurutmaVar, kurutmaProgramı }) {
 		<IonChip>
 			<IonIcon icon={apertureOutline}></IonIcon>
 			{kurutmaVar ? (
-				<IonLabel>{kurutmaProgramı.label.split('(')[0]}</IonLabel>
+				<IonLabel>{kurutmaProgramı}</IonLabel>
 			) : (
 				<>
 					<IonLabel>Kurutma Yok</IonLabel>

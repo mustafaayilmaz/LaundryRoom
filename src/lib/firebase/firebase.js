@@ -6,8 +6,6 @@ import { firebaseConfig } from './config'
 
 fb.initializeApp(firebaseConfig)
 
-
-
 class Firebase {
 	constructor() {
 		this.firestore = fb.firestore()
@@ -20,6 +18,15 @@ class Firebase {
 			return { id: docRef.id, ref: docRef }
 		} catch (error) {
 			throw error
+		}
+	}
+
+	async çamaşırlarıGetir(uid) {
+		try {
+			const snapshot = await this.firestore.collection(collection).where('uid', '==', uid).get()
+			return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+		} catch (error) {
+			console.log(error)
 		}
 	}
 }

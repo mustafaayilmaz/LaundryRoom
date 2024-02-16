@@ -32,7 +32,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	})
 
 	const onSubmit = async data => {
-		const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid })
+		const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid, tarih: Date.now(), durum: 'Sırada' })
 		console.log((await doc.ref.get()).data())
 	}
 
@@ -68,7 +68,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 					<Yıkama errors={errors} clearErrors={clearErrors} register={register} />
 
-					<Kurutma errors={errors} clearErrors={clearErrors} register={register} setToplamÜcret={setToplamÜcret} toplamÜcret={toplamÜcret} />
+					<Kurutma setValue={setValue} errors={errors} clearErrors={clearErrors} register={register} setToplamÜcret={setToplamÜcret} toplamÜcret={toplamÜcret} />
 
 					<EkBilgiler setValue={setValue} register={register} toplamÜcret={toplamÜcret} setToplamÜcret={setToplamÜcret} />
 
