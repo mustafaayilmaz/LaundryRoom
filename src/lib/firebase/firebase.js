@@ -6,10 +6,21 @@ import { firebaseConfig } from './config'
 
 fb.initializeApp(firebaseConfig)
 
+
+
 class Firebase {
 	constructor() {
 		this.firestore = fb.firestore()
 		this.auth = fb.auth()
+	}
+
+	async addDocument(collection, data) {
+		try {
+			const docRef = await this.firestore.collection(collection).add(data)
+			return { id: docRef.id, ref: docRef }
+		} catch (error) {
+			throw error
+		}
 	}
 }
 

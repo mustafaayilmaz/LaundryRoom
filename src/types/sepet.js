@@ -15,10 +15,9 @@ export class Sepet {
 	 * @param {string} durum
 	 * @param {string} ekBilgi
 	 */
-	constructor(id, uid, program, tarih, derece, kurutmaProgramı, kurutmaVar, deterjanVar, yumuşatıcıVar, durum, ekBilgi) {
-		this.id = id
+	constructor(uid, yıkamaProgramı, tarih, derece, kurutmaProgramı, kurutmaVar, deterjanVar, yumuşatıcıVar, durum, ekBilgi) {
 		this.uid = uid
-		this.program = program
+		this.yıkamaProgramı = yıkamaProgramı
 		this.tarih = tarih
 		this.derece = derece
 		this.kurutmaProgramı = kurutmaProgramı
@@ -27,6 +26,7 @@ export class Sepet {
 		this.yumuşatıcıVar = yumuşatıcıVar
 		this.durum = durum
 		this.ekBilgi = ekBilgi
+		this.id = ''
 	}
 
 	// TODO: Implement
@@ -40,7 +40,7 @@ const durum = {
 	bitti: 'Bitti'
 }
 
-const örnekSepet = new Sepet('595', '982', yıkamaProgramları.pamuklu, new Date(), '30', kurutmaProgramları.sentetikDolapKuruluğu, true, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
-const kurutmaYok = new Sepet('1165', '77', yıkamaProgramları.sentetik, new Date(), '40', null, false, false, true, durum.makinede, '')
+const örnekSepet = new Sepet('982', yıkamaProgramları.pamuklu, new Date(), '30', kurutmaProgramları.sentetikDolapKuruluğu, true, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
+const kurutmaYok = new Sepet('77', yıkamaProgramları.sentetik, new Date(), '40', null, false, false, true, durum.makinede, '')
 
 export const örnekSepetler = [örnekSepet, kurutmaYok]

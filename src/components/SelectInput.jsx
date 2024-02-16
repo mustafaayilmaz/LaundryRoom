@@ -5,7 +5,7 @@ export default function SelectInput({ label, fieldName, options, required, regis
 	return (
 		<>
 			<IonItem>
-				<IonSelect label={label} labelPlacement="floating" {...register(fieldName, { required: required })} onIonChange={() => clearErrors(fieldName)} disabled={disabled}>
+				<IonSelect label={label} labelPlacement="floating" {...register(fieldName)} onIonChange={() => clearErrors(fieldName)} disabled={disabled}>
 					{options.map(option => (
 						<IonSelectOption key={option.value} value={option.value}>
 							{option.label}

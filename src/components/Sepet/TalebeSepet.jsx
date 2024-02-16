@@ -25,7 +25,7 @@ export default function TalebeSepet({ sepet }) {
 					<IonCol size="7">
 						<TarihChip tarih={sepet.tarih} />
 
-						<YıkamaChip yıkamaProgramı={sepet.program} derece={sepet.derece} />
+						<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.derece} />
 
 						<KurutmaChip kurutmaVar={sepet.kurutmaVar} kurutmaProgramı={sepet.kurutmaProgramı} />
 

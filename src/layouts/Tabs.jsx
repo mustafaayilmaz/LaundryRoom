@@ -1,14 +1,10 @@
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
 import React from 'react'
-import { userState } from '../atoms/user'
-
-import { useRecoilState } from 'recoil'
 
 import { Route } from 'react-router'
 
-import { bagOutline, home, listOutline, personOutline } from 'ionicons/icons'
+import { home, listOutline, personOutline } from 'ionicons/icons'
 
-import Clothes from '../pages/Clothes'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Queue from '../pages/Queue'
@@ -16,7 +12,6 @@ import Queue from '../pages/Queue'
 import { useLocation } from 'react-router-dom'
 
 export const Tabs = ({ formatMessage }) => {
-	const [user, setUser] = useRecoilState(userState)
 	const link = useLocation()
 
 	return (
@@ -24,7 +19,6 @@ export const Tabs = ({ formatMessage }) => {
 			<IonRouterOutlet>
 				<Route path="/home" render={() => <Home formatMessage={formatMessage} />} exact={true} />
 				<Route path="/queue" render={() => <Queue formatMessage={formatMessage} />} exact={true} />
-				<Route path="/clothes" render={() => <Clothes formatMessage={formatMessage} />} exact={true} />
 				<Route path="/profile" render={() => <Profile formatMessage={formatMessage} />} exact={true} />
 			</IonRouterOutlet>
 
@@ -37,10 +31,7 @@ export const Tabs = ({ formatMessage }) => {
 					<IonLabel>{formatMessage('Queue')}</IonLabel>
 					<IonIcon icon={listOutline} />
 				</IonTabButton>
-				<IonTabButton tab="clothes" href="/clothes" selected={link.pathname == '/clothes'}>
-					<IonLabel>{formatMessage('Clothes')}</IonLabel>
-					<IonIcon icon={bagOutline} />
-				</IonTabButton>
+
 				<IonTabButton tab="profile" href="/profile" selected={link.pathname == '/profile'}>
 					<IonLabel>{formatMessage('Profile')}</IonLabel>
 					<IonIcon icon={personOutline} />

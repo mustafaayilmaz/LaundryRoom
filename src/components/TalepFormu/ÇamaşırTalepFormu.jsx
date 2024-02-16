@@ -1,14 +1,18 @@
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { IonButton, IonButtons, IonCol, IonContent, IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
 import React, { useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { useForm } from 'react-hook-form'
 import camasir_sepeti from '../../../public/camasir_sepeti.png'
+import firebaseClient from '../../lib/firebase/firebase'
 import { ücret } from '../../types/ücret'
 import EkBilgiler from './EkBilgiler'
 import Kurutma from './Kurutma'
 import Yıkama from './Yıkama'
 
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
+	const [user, loading, error] = useAuthState(firebaseClient.auth)
+
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
 
 	const {
@@ -20,13 +24,16 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		formState: { errors }
 	} = useForm({
 		defaultValues: {
+			kurutmaProgramı: null,
+			kurutmaVar: false,
 			yumuşatıcıVar: false,
 			deterjanVar: false
 		}
 	})
 
-	const onSubmit = data => {
-		console.log(data)
+	const onSubmit = async data => {
+		const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid })
+		console.log((await doc.ref.get()).data())
 	}
 
 	const takePicture = async () => {

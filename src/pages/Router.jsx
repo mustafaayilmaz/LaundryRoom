@@ -28,7 +28,7 @@ export const Router = () => {
 		<IonRouterOutlet>
 			{user ? (
 				<>
-					<Route exact path={['/', '/login', '/profile', '/clothes', '/home']}>
+					<Route exact path={['/', '/login']}>
 						<Redirect to="/home" />
 					</Route>
 					<Tabs formatMessage={formatMessage} />

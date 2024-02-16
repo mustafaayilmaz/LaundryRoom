@@ -4,7 +4,7 @@ import { kurutmaProgramları } from '../../types/programlar'
 import { ücret } from '../../types/ücret'
 import SelectInput from '../SelectInput'
 
-export default function Kurutma({ errors, clearErrors, register, toplamÜcret, setToplamÜcret }) {
+export default function Kurutma({ errors, clearErrors, setValue, register, toplamÜcret, setToplamÜcret }) {
 	const [isKurutma, setIsKurutma] = useState(false)
 
 	const toggleKurutma = () => {
@@ -22,7 +22,14 @@ export default function Kurutma({ errors, clearErrors, register, toplamÜcret, s
 				<IonLabel>Kurutma</IonLabel>
 			</IonItemDivider>
 			<IonItem>
-				<IonToggle onIonChange={toggleKurutma}>Kurutma</IonToggle>
+				<IonToggle
+					onIonChange={e => {
+						setValue('kurutmaVar', e.detail.checked)
+						toggleKurutma()
+					}}
+				>
+					Kurutma
+				</IonToggle>
 			</IonItem>
 			<SelectInput errors={errors} clearErrors={clearErrors} register={register} fieldName={'kurutmaProgramı'} label={'Kurutma Programı'} options={Object.values(kurutmaProgramları)} required={isKurutma} disabled={!isKurutma} />
 		</IonItemGroup>

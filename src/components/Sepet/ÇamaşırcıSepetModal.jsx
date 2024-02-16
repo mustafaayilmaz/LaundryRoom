@@ -29,7 +29,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					</IonItem>
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Yıkama Programı</IonLabel>
-						<YıkamaChip derece={sepet.derece} yıkamaProgramı={sepet.program} />
+						<YıkamaChip derece={sepet.derece} yıkamaProgramı={sepet.yıkamaProgramı} />
 					</IonItem>
 
 					<IonItem style={{ marginTop: '6px' }}>
