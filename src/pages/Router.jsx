@@ -2,11 +2,12 @@ import React from 'react'
 
 import Tabs from '../layouts/Tabs'
 
-import { IonContent, IonPage, IonRouterOutlet } from '@ionic/react'
+import { IonRouterOutlet } from '@ionic/react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useIntl } from 'react-intl'
 import { Redirect, Route } from 'react-router'
 import firebaseClient from '../lib/firebase/firebase'
+import Loading from './Loading'
 import Login from './Login'
 
 export const Router = () => {
@@ -17,11 +18,7 @@ export const Router = () => {
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
 
 	if (loading) {
-		return (
-			<IonPage>
-				<IonContent>Loading</IonContent>
-			</IonPage>
-		)
+		return <Loading />
 	}
 
 	return (
