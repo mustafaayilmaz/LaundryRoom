@@ -38,16 +38,36 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		console.log((await doc.ref.get()).data())
 	}
 
+	const canvas = document.createElement('canvas')
+	const ctx = canvas.getContext('2d')
+	const cameraImage = new Image()
+
 	const takePicture = async () => {
 		const image = await Camera.getPhoto({
 			quality: 90,
 			allowEditing: true,
-			resultType: CameraResultType.Uri,
+			resultType: CameraResultType.Base64,
 			source: CameraSource.Prompt
 		})
 
-		var imageUrl = image.webPath
-		imageElement.src = imageUrl
+		cameraImage.src = `data:image/jpeg;base64,${image.base64String}`
+		canvas.width = cameraImage.width
+		canvas.height = cameraImage.height
+
+		ctx.drawImage(cameraImage, 0, 0)
+	}
+
+	const rect = { x: 100, y: 100, width: 200, height: 200 }
+
+	function drawRectangle() {
+		ctx.strokeStyle = 'red'
+		ctx.lineWidth = 2
+		ctx.strokeRect(rect.x, rect.y, rect.width, rect.height)
+	}
+
+	function drawImageWithRectangle() {
+		ctx.drawImage(cameraImage, 0, 0)
+		drawRectangle()
 	}
 
 	return (
@@ -64,7 +84,13 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<IonRow>
 						<IonCol style={{ display: 'flex', justifyContent: 'center' }}>
-							<img style={{ width: '125px', height: 'auto' }} onClick={() => takePicture()} src={camasir_sepeti} />
+							<img
+								style={{ width: '125px', height: 'auto' }}
+								onClick={() => {
+									takePicture().then(drawImageWithRectangle)
+								}}
+								src={camasir_sepeti}
+							/>
 						</IonCol>
 					</IonRow>
 
