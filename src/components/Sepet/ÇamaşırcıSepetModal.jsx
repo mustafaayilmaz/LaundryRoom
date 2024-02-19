@@ -1,4 +1,4 @@
-import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar } from '@ionic/react'
 import { Sepet } from '../../types/sepet'
 
 import React from 'react'
@@ -56,20 +56,61 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>
-				<IonButton>
-					<IonSelect aria-label="atama" label="Makineye Ata" onIonChange={() => setIsSepetOpen(false)}>
-						<IonSelectOption value="apple">Apple</IonSelectOption>
-						<IonSelectOption value="banana">Banana</IonSelectOption>
-						<IonSelectOption value="orange">Orange</IonSelectOption>
-					</IonSelect>
-				</IonButton>
-				<IonButton>
-					<IonSelect aria-label="atama" label="Kurutmaya Ata" onIonChange={() => setIsSepetOpen(false)}>
-						<IonSelectOption value="apple">Apple</IonSelectOption>
-						<IonSelectOption value="banana">Banana</IonSelectOption>
-						<IonSelectOption value="orange">Orange</IonSelectOption>
-					</IonSelect>
-				</IonButton>
+				<IonButton id="çamaşır-makinesine-ata">Çamaşır Makinesine Ata</IonButton>
+				<IonAlert
+					trigger="çamaşır-makinesine-ata"
+					header="Çamaşır makinesini seçiniz"
+					// TODO: Button'a on click ekle
+					// ? Sadece müsait makineleri göster
+					buttons={['Tamam']}
+					inputs={[
+						{
+							label: 'Çamaşır Makinesi 1',
+							type: 'radio',
+							value: 'Çamaşır Makinesi 1'
+						},
+						{
+							label: 'Çamaşır Makinesi 2',
+							type: 'radio',
+							value: 'Çamaşır Makinesi 2'
+						},
+						{
+							label: 'Çamaşır Makinesi 3',
+							type: 'radio',
+							value: 'Çamaşır Makinesi 3'
+						},
+						{
+							label: 'Çamaşır Makinesi 4',
+							type: 'radio',
+							value: 'Çamaşır Makinesi 4'
+						}
+					]}
+				></IonAlert>
+				<IonButton id="kurutmaya-ata">Kurutma Makinesine Ata</IonButton>
+				<IonAlert
+					trigger="kurutmaya-ata"
+					header="Kurutma makinesini seçiniz"
+					// TODO: Button'a on click ekle
+					// ? Sadece müsait makineleri göster
+					buttons={['Tamam']}
+					inputs={[
+						{
+							label: 'Kurutma Makinesi 1',
+							type: 'radio',
+							value: 'Kurutma Makinesi 1'
+						},
+						{
+							label: 'Kurutma Makinesi 2',
+							type: 'radio',
+							value: 'Kurutma Makinesi 2'
+						},
+						{
+							label: 'Kurutma Makinesi 3',
+							type: 'radio',
+							value: 'Kurutma Makinesi 3'
+						}
+					]}
+				></IonAlert>
 			</IonContent>
 		</IonModal>
 	)

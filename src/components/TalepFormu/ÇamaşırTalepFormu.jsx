@@ -1,5 +1,5 @@
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
-import { IonButton, IonButtons, IonCol, IonContent, IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonCol, IonContent, IonHeader, IonModal, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
 import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useForm } from 'react-hook-form'
@@ -12,6 +12,7 @@ import Yıkama from './Yıkama'
 
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const [user, loading, error] = useAuthState(firebaseClient.auth)
+	const [presentAlert] = useIonAlert()
 
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
 
@@ -31,6 +32,8 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	})
 
 	const onSubmit = async data => {
+		// TODO: Ücreti ekle
+
 		const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid, tarih: Date.now(), durum: 'Sırada' })
 		console.log((await doc.ref.get()).data())
 	}
@@ -51,7 +54,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		<IonModal isOpen={isOpen} onIonModalDidDismiss={reset}>
 			<IonHeader>
 				<IonToolbar>
-					<IonTitle>Çamaşır Talebi Oluşturma</IonTitle>
+					<IonTitle>Çamaşır Talebi Oluştur</IonTitle>
 					<IonButtons slot="start">
 						<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
 					</IonButtons>
