@@ -1,7 +1,8 @@
-import { IonButton, IonCardContent, IonCol, IonInput, IonLabel, IonRow } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
+import { hataMesajları } from '../config/error'
 import NotAuthorized from '../layouts/Not-Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 
@@ -9,11 +10,13 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 
 export const Login = () => {
 	const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(firebaseClient.auth)
+	const [presentAlert] = useIonAlert()
 
 	const history = useHistory()
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors }
 	} = useForm()
 
@@ -21,9 +24,23 @@ export const Login = () => {
 		data.kullanıcıAdı += '@gmail.com'
 
 		try {
-			await signInWithEmailAndPassword(data.kullanıcıAdı, data.şifre)
+			const x = await signInWithEmailAndPassword(data.kullanıcıAdı, data.şifre)
 
-			history.push('/home')
+			if (x === undefined) {
+				presentAlert({
+					message: hataMesajları.yanlışKullanıcıAdıveyaŞifre,
+					buttons: [
+						{
+							text: 'Tekrar Dene',
+							handler: () => {
+								reset()
+							}
+						}
+					]
+				})
+			} else {
+				history.push('/home')
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -37,7 +54,7 @@ export const Login = () => {
 						<IonInput label="Kullanıcı Adı" type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top ion-input" {...register('kullanıcıAdı', { required: true })}></IonInput>
 						{errors.kullanıcıAdı && (
 							<IonLabel className="ion-margin-start ion-margin-top" color={'warning'}>
-								Lütfen kullanıcı adınızı giriniz !
+								{hataMesajları.eksikKullanıcıAdı}
 							</IonLabel>
 						)}
 					</IonCol>
@@ -47,7 +64,7 @@ export const Login = () => {
 						<IonInput label={'Şifre'} type="password" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top ion-input" {...register('şifre', { required: true })} />
 						{errors.şifre && (
 							<IonLabel className="ion-margin-start ion-margin-top" color={'warning'}>
-								Lütfen şifrenizi giriniz !
+								{hataMesajları.eksikŞifre}
 							</IonLabel>
 						)}
 					</IonCol>

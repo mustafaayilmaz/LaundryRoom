@@ -15,6 +15,8 @@ export const Queue = () => {
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
 	const [sepetler, loading, error, snapshot] = useCollectionDataOnce(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
 
+	// TODO: snapshot.docks
+
 	console.log(sepetler)
 
 	const [isOpen, setIsOpen] = useState(false)

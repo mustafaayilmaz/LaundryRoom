@@ -1,7 +1,11 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/react'
 import React from 'react'
+import { useSignOut } from 'react-firebase-hooks/auth'
 import Authorized from '../layouts/Authorized'
+import firebaseClient from '../lib/firebase/firebase'
 export const Profile = () => {
+	const [signOut, loading, error] = useSignOut(firebaseClient.auth)
+
 	return (
 		<Authorized>
 			<IonCard className="ion-card">
@@ -10,6 +14,16 @@ export const Profile = () => {
 					<IonCardTitle>MUSTAFA YILMAZ</IonCardTitle>
 				</IonCardHeader>
 			</IonCard>
+			<IonButton
+				onClick={async () => {
+					const success = await signOut()
+					if (success) {
+						console.log('Successfully signed out ')
+					}
+				}}
+			>
+				Çıkış Yap
+			</IonButton>
 		</Authorized>
 	)
 }
