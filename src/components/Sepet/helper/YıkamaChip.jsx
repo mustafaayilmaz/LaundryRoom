@@ -5,9 +5,9 @@ export default function YıkamaChip({ yıkamaProgramı, derece }) {
 	return (
 		<IonChip>
 			<IonIcon icon={waterOutline}></IonIcon>
-			<IonLabel>{yıkamaProgramı}</IonLabel>
+			<IonLabel>{yıkamaProgramı.split('(')[0]}</IonLabel>
 			<IonIcon icon={thermometerOutline} className="ion-padding-start"></IonIcon>
-			<IonLabel>{derece}°</IonLabel>
+			<IonLabel>{derece}</IonLabel>
 		</IonChip>
 	)
 }

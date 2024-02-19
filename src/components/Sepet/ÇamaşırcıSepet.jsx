@@ -24,7 +24,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 						<img src={camasir_sepeti} width={'75%'} height={'75%'} />
 					</IonCol>
 					<IonCol size="7">
-						<TarihChip tarih={sepet.tarih} />
+						<TarihChip tarih={new Date(sepet.tarih)} />
 
 						<TalebeChip uid={sepet.uid} />
 					</IonCol>

@@ -4,7 +4,7 @@ import { kurutmaProgramları } from '../../types/programlar'
 import { ücret } from '../../types/ücret'
 import SelectInput from '../SelectInput'
 
-export default function Kurutma({ errors, clearErrors, setValue, register, toplamÜcret, setToplamÜcret }) {
+export default function Kurutma({ errors, clearErrors, register, toplamÜcret, setToplamÜcret }) {
 	const [isKurutma, setIsKurutma] = useState(false)
 
 	const toggleKurutma = () => {
@@ -24,7 +24,6 @@ export default function Kurutma({ errors, clearErrors, setValue, register, topla
 			<IonItem>
 				<IonToggle
 					onIonChange={e => {
-						setValue('kurutmaVar', e.detail.checked)
 						toggleKurutma()
 					}}
 				>

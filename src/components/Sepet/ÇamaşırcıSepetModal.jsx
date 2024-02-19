@@ -29,12 +29,12 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					</IonItem>
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Yıkama Programı</IonLabel>
-						<YıkamaChip derece={sepet.derece} yıkamaProgramı={sepet.yıkamaProgramı} />
+						<YıkamaChip derece={sepet.yıkamaSıcaklığı} yıkamaProgramı={sepet.yıkamaProgramı} />
 					</IonItem>
 
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Kurutma Programı</IonLabel>
-						<KurutmaChip kurutmaVar={sepet.kurutmaVar} kurutmaProgramı={sepet.kurutmaProgramı} />
+						<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
 					</IonItem>
 
 					<IonItem style={{ marginTop: '6px' }}>

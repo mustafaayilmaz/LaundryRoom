@@ -25,7 +25,6 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	} = useForm({
 		defaultValues: {
 			kurutmaProgramı: null,
-			kurutmaVar: false,
 			yumuşatıcıVar: false,
 			deterjanVar: false
 		}
@@ -68,7 +67,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 					<Yıkama errors={errors} clearErrors={clearErrors} register={register} />
 
-					<Kurutma setValue={setValue} errors={errors} clearErrors={clearErrors} register={register} setToplamÜcret={setToplamÜcret} toplamÜcret={toplamÜcret} />
+					<Kurutma errors={errors} clearErrors={clearErrors} register={register} setToplamÜcret={setToplamÜcret} toplamÜcret={toplamÜcret} />
 
 					<EkBilgiler setValue={setValue} register={register} toplamÜcret={toplamÜcret} setToplamÜcret={setToplamÜcret} />
 

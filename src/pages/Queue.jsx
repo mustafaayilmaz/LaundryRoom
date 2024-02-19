@@ -9,21 +9,19 @@ import ÇamaşırcıSepetModal from '../components/Sepet/ÇamaşırcıSepetModal
 import ÇamaşırTalepFormu from '../components/TalepFormu/ÇamaşırTalepFormu'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
-import { örnekSepetler } from '../types/sepet'
+import Loading from './Loading'
 
 export const Queue = () => {
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
-	const [sepetler, loading, error, snapshot] = useCollectionDataOnce(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
-
-	// TODO: snapshot.docks
-
-	console.log(sepetler)
+	const [sepetler, loading, error, snapshot, reload] = useCollectionDataOnce(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
 
 	const [isOpen, setIsOpen] = useState(false)
-
 	const [selectedSepet, setSelectedSepet] = useState({})
-
 	const [isSepetOpen, setIsSepetOpen] = useState(false)
+
+	if (userLoading || loading) {
+		return <Loading />
+	}
 
 	return (
 		<Authorized>
@@ -31,9 +29,7 @@ export const Queue = () => {
 
 			<p>Çamaşırcı</p>
 
-			{örnekSepetler.map((sepet, i) => (
-				<ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />
-			))}
+			{sepetler && sepetler.map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
 

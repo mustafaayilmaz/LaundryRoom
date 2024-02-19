@@ -23,7 +23,7 @@ class Firebase {
 
 	async çamaşırlarıGetir(uid) {
 		try {
-			const snapshot = await this.firestore.collection(collection).where('uid', '==', uid).get()
+			const snapshot = await this.firestore.collection('sepetler').where('uid', '==', uid).get()
 			return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 		} catch (error) {
 			console.log(error)

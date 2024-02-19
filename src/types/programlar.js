@@ -7,20 +7,17 @@ const convertMinutesToMilliSeconds = minutes => {
 }
 
 const sentetik = {
-	value: 'sentetik',
-	label: 'Sentetik (2.5 Saat)',
+	value: 'Sentetik (2.5 Saat)',
 	duration: convertMinutesToMilliSeconds(150)
 }
 
 const mix = {
-	value: 'mix',
-	label: 'Mix (2 Saat)',
+	value: 'Mix (2 Saat)',
 	duration: convertMinutesToMilliSeconds(120)
 }
 
 const pamuklu = {
-	value: 'pamuklu',
-	label: 'Pamuklu (3 Saat)',
+	value: 'Pamuklu (3 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
@@ -30,35 +27,27 @@ export const yıkamaProgramları = {
 	pamuklu
 }
 
-export const sıcaklıklar = [
-	{ value: 30, label: '30°' },
-	{ value: 40, label: '40°' },
-	{ value: 60, label: '60°' }
-]
+export const sıcaklıklar = [{ value: '30°' }, { value: '40°' }, { value: '60°' }]
 
 // Todo: Kurutma programlarının sürelerini düzenle
 
 const pamukluDolapKuruluğu = {
-	value: 'pamukluDolapKuruluğu',
-	label: 'Pamuklu Dolap Kuruluğu (3 Saat)',
+	value: 'Pamuklu Dolap Kuruluğu (3 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const sentetikDolapKuruluğu = {
-	value: 'sentetikDolapKuruluğu',
-	label: 'Sentetik Dolap Kuruluğu (2 Saat)',
+	value: 'Sentetik Dolap Kuruluğu (2 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const spor = {
-	value: 'spor',
-	label: 'Spor (2 Saat)',
+	value: 'Spor (2 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 
 const karışık = {
-	value: 'karışık',
-	label: 'Karışık (2.5 Saat)',
+	value: 'Karışık (2.5 Saat)',
 	duration: convertMinutesToMilliSeconds(180)
 }
 

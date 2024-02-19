@@ -52,13 +52,13 @@ export const Login = () => {
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
 						<IonInput label="Kullanıcı Adı" type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end   ion-input" {...register('kullanıcıAdı', { required: true })}></IonInput>
-						{errors.kullanıcıAdı && <IonLabel color={'warning'}>{hataMesajları.eksikKullanıcıAdı}</IonLabel>}
+						{errors.kullanıcıAdı && <IonLabel color={'danger'}>{hataMesajları.eksikKullanıcıAdı}</IonLabel>}
 					</IonCol>
 				</IonRow>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
 						<IonInput label={'Şifre'} type="password" labelPlacement="floating" className="ion-padding-start ion-padding-end  ion-input" {...register('şifre', { required: true })} />
-						{errors.şifre && <IonLabel color={'warning'}>{hataMesajları.eksikŞifre}</IonLabel>}
+						{errors.şifre && <IonLabel color={'danger'}>{hataMesajları.eksikŞifre}</IonLabel>}
 					</IonCol>
 				</IonRow>
 

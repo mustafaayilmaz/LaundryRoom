@@ -14,6 +14,8 @@ import YıkamaChip from './helper/YıkamaChip'
  * @returns
  */
 export default function TalebeSepet({ sepet }) {
+	console.log(sepet)
+
 	return (
 		<IonCard className="ion-align-items-center">
 			<IonGrid>
@@ -25,9 +27,9 @@ export default function TalebeSepet({ sepet }) {
 					<IonCol size="7">
 						<TarihChip tarih={new Date(sepet.tarih)} />
 
-						<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.derece} />
+						<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.yıkamaSıcaklığı} />
 
-						<KurutmaChip kurutmaVar={sepet.kurutmaVar} kurutmaProgramı={sepet.kurutmaProgramı} />
+						<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
 
 						<IonChip>{sepet.durum}</IonChip>
 					</IonCol>
