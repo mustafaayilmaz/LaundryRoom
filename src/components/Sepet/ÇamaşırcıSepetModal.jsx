@@ -1,10 +1,10 @@
-import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
-import { checkmarkOutline, closeOutline } from 'ionicons/icons'
+import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 import { Sepet } from '../../types/sepet'
 
 import React from 'react'
 import KurutmaChip from './helper/KurutmaChip'
 import TalebeChip from './helper/TalebeChip'
+import VarYokChip from './helper/VarYokChip'
 import YıkamaChip from './helper/YıkamaChip'
 /**
  *
@@ -39,15 +39,11 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Şahsi Deterjanım Var</IonLabel>
-						<IonChip color="success" style={{ paddingLeft: 0 }}>
-							<IonIcon icon={checkmarkOutline}></IonIcon>
-						</IonChip>
+						<VarYokChip varMı={sepet.deterjanVar} />
 					</IonItem>
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Şahsi Yumuşatıcım Var</IonLabel>
-						<IonChip color="danger" style={{ paddingLeft: 0 }}>
-							<IonIcon icon={closeOutline}></IonIcon>
-						</IonChip>
+						<VarYokChip varMı={sepet.yumuşatıcıVar} />
 					</IonItem>
 				</IonList>
 				<IonAccordionGroup expand="inset">
