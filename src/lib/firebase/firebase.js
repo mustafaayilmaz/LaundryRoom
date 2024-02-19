@@ -29,6 +29,16 @@ class Firebase {
 			console.log(error)
 		}
 	}
+
+	async aktifSepetleriGetir(uid) {
+		try {
+			// TODO: Diğer durumları ekle
+			const snapshot = await this.firestore.collection('sepetler').where('uid', '==', uid).where('durum', '==', 'Sırada').get()
+			return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+		} catch (error) {
+			console.log(error)
+		}
+	}
 }
 
 const firebaseClient = new Firebase()
