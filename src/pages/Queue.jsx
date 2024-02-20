@@ -2,7 +2,7 @@ import { IonFab, IonFabButton, IonIcon } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 import TalebeSepet from '../components/Sepet/TalebeSepet'
 import ÇamaşırcıSepet from '../components/Sepet/ÇamaşırcıSepet'
 import ÇamaşırcıSepetModal from '../components/Sepet/ÇamaşırcıSepetModal'
@@ -13,13 +13,13 @@ import Loading from './Loading'
 
 export const Queue = () => {
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
-	const [sepetler, loading, error, snapshot, reload] = useCollectionDataOnce(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
+	const [sepetler, loading, error, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
 
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedSepet, setSelectedSepet] = useState({})
 	const [isSepetOpen, setIsSepetOpen] = useState(false)
 
-	if (userLoading || loading) {
+	if (userLoading) {
 		return <Loading />
 	}
 

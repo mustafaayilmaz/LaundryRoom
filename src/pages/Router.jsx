@@ -3,15 +3,16 @@ import React from 'react'
 import Tabs from '../layouts/Tabs'
 
 import { IonRouterOutlet } from '@ionic/react'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useIntl } from 'react-intl'
 import { Redirect, Route } from 'react-router'
-import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
 import Login from './Login'
 
 export const Router = () => {
-	const [user, loading, error] = useAuthState(firebaseClient.auth)
+	const [user, loading, error] = useAuthState(firebase.auth())
 
 	const intl = useIntl()
 

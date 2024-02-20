@@ -6,6 +6,7 @@ import laundrymachine from '../../public/laundrymachine.png'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
+
 export const Home = () => {
 	const [aktifSepetler, setAktifSepetler] = useState([])
 	const [user, loading, error] = useAuthState(firebaseClient.auth)
@@ -19,15 +20,15 @@ export const Home = () => {
 		return console.log('Error')
 	}
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const data = await firebaseClient.aktifSepetleriGetir(user.uid)
-			console.log(data)
-			setAktifSepetler(data)
-		}
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const data = await firebaseClient.aktifSepetleriGetir(user.uid)
+	// 		console.log(data)
+	// 		setAktifSepetler(data)
+	// 	}
 
-		fetchData()
-	}, [])
+	// 	fetchData()
+	// }, [])
 
 	return (
 		<Authorized>

@@ -14,21 +14,21 @@ import '@ionic/react/css/padding.css'
 import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
+import 'firebase/compat/storage'
 import './theme/style.scss'
 import './theme/variables.css'
 
+import { IntlProvider } from 'react-intl'
 import Locales from './lang'
 import Router from './pages/Router'
 
-import { IntlProvider } from 'react-intl'
-import { useRecoilValue } from 'recoil'
-import userState from './atoms/user'
+import './lib/firebase/firebase'
 
 setupIonicReact()
 
 const App = () => {
-	const user = useRecoilValue(userState)
-
 	const locale = Locales['tr']
 
 	return (

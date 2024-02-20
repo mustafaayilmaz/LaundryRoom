@@ -34,13 +34,14 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const onSubmit = async data => {
 		// TODO: Ücreti ekle
 
-		const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid, tarih: Date.now(), durum: 'Sırada' })
-		console.log((await doc.ref.get()).data())
+		try {
+			const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid, tarih: Date.now(), durum: 'Sırada' })
+			console.log((await doc.ref.get()).data())
+			setIsOpen(false)
+		} catch (error) {
+			console.error(error)
+		}
 	}
-
-	const canvas = document.createElement('canvas')
-	const ctx = canvas.getContext('2d')
-	const cameraImage = new Image()
 
 	const takePicture = async () => {
 		const image = await Camera.getPhoto({
@@ -51,23 +52,6 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 		})
 
 		cameraImage.src = `data:image/jpeg;base64,${image.base64String}`
-		canvas.width = cameraImage.width
-		canvas.height = cameraImage.height
-
-		ctx.drawImage(cameraImage, 0, 0)
-	}
-
-	const rect = { x: 100, y: 100, width: 200, height: 200 }
-
-	function drawRectangle() {
-		ctx.strokeStyle = 'red'
-		ctx.lineWidth = 2
-		ctx.strokeRect(rect.x, rect.y, rect.width, rect.height)
-	}
-
-	function drawImageWithRectangle() {
-		ctx.drawImage(cameraImage, 0, 0)
-		drawRectangle()
 	}
 
 	return (
@@ -87,7 +71,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 							<img
 								style={{ width: '125px', height: 'auto' }}
 								onClick={() => {
-									takePicture().then(drawImageWithRectangle)
+									takePicture()
 								}}
 								src={camasir_sepeti}
 							/>

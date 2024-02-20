@@ -4,10 +4,9 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { hataMesajları } from '../config/error'
 import NotAuthorized from '../layouts/Not-Authorized'
-import firebaseClient from '../lib/firebase/firebase'
 
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-
+import firebaseClient from '../lib/firebase/firebase'
 export const Login = () => {
 	const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(firebaseClient.auth)
 	const [presentAlert] = useIonAlert()
