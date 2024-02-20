@@ -2,6 +2,7 @@ import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonCo
 import { Sepet } from '../../types/sepet'
 
 import React from 'react'
+import firebaseClient from '../../lib/firebase/firebase'
 import KurutmaChip from './helper/KurutmaChip'
 import TalebeChip from './helper/TalebeChip'
 import VarYokChip from './helper/VarYokChip'
@@ -11,6 +12,7 @@ import YıkamaChip from './helper/YıkamaChip'
  * @param {{sepet: Sepet}} param0
  */
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
+	console.log(sepet)
 	return (
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
@@ -62,7 +64,19 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					header="Çamaşır makinesini seçiniz"
 					// TODO: Button'a on click ekle
 					// ? Sadece müsait makineleri göster
-					buttons={['Tamam']}
+					buttons={[
+						{
+							text: 'Tamam',
+							handler: async makineId => {
+								try {
+									console.log(makineId)
+									await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId)
+								} catch (error) {
+									console.log(error)
+								}
+							}
+						}
+					]}
 					inputs={[
 						{
 							label: 'Çamaşır Makinesi 1',

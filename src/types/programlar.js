@@ -27,6 +27,14 @@ export const yıkamaProgramları = {
 	pamuklu
 }
 
+export const getDurationFromProgram = program => {
+	for (let p of Object.values(yıkamaProgramları)) {
+		if (p.value == program) {
+			return p.duration
+		}
+	}
+}
+
 export const sıcaklıklar = [{ value: '30°' }, { value: '40°' }, { value: '60°' }]
 
 // Todo: Kurutma programlarının sürelerini düzenle

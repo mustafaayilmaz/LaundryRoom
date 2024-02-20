@@ -2,6 +2,7 @@ import fb from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
+import { getDurationFromProgram } from '../../types/programlar'
 import { firebaseConfig } from './config'
 
 fb.initializeApp(firebaseConfig)
@@ -21,22 +22,18 @@ class Firebase {
 		}
 	}
 
-	async çamaşırlarıGetir(uid) {
+	async çamaşırMakinesineAta(sepetId, çamaşırMakinesiId) {
 		try {
-			const snapshot = await this.firestore.collection('sepetler').where('uid', '==', uid).get()
-			return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-		} catch (error) {
-			console.log(error)
-		}
-	}
+			const sepetRef = this.firestore.collection('sepetler').doc(sepetId)
+			const sepet = (await sepetRef.get()).data()
+			await sepetRef.update({ durum: 'Çamaşır Makinesinde' })
 
-	async aktifSepetleriGetir(uid) {
-		try {
-			// TODO: Diğer durumları ekle
-			const snapshot = await this.firestore.collection('sepetler').where('uid', '==', uid).where('durum', '==', 'Sırada').get()
-			return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+			await this.firestore
+				.collection('camaşirMakineleri')
+				.doc(çamaşırMakinesiId)
+				.update({ aktifSepetId: sepetId, durum: 'Çalışıyor', tahminiBitiş: Date.now() + getDurationFromProgram(sepet.yıkamaProgramı) })
 		} catch (error) {
-			console.log(error)
+			throw error
 		}
 	}
 }

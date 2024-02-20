@@ -25,9 +25,9 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
-			{sepetler && sepetler.map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)}
+			{sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)}
 
-			{sepetler && sepetler.map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
+			{sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
 
