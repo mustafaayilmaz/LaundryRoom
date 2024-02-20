@@ -1,11 +1,18 @@
 import { IonAvatar, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonLabel, IonRow, IonSegment, IonSegmentButton } from '@ionic/react'
 import { personCircleOutline, timeOutline } from 'ionicons/icons'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import laundrymachine from '../../public/laundrymachine.png'
+import KurutmaMakinesi from '../components/Makine/Kurutma/KurutmaMakinesi'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
+import { örnekSepetler } from '../types/sepet'
 import Loading from './Loading'
+
+const örnekMakine = {
+	id: 'Çamaşır Makinesi 1',
+	tahminiBitiş: 1708431147
+}
 
 export const Home = () => {
 	const [aktifSepetler, setAktifSepetler] = useState([])
@@ -41,7 +48,7 @@ export const Home = () => {
 				</IonSegmentButton>
 			</IonSegment>
 
-			{selected === 'çamaşır' ? <MakineTalebe isim={'Çamaşır'} /> : <MakineÇamaşırcı isim={'Kurutma'} />}
+			{selected === 'çamaşır' ? <MakineTalebe isim={'Çamaşır'} /> : <KurutmaMakinesi rol={'çamaşırcı'} makine={örnekMakine} sepet={örnekSepetler[0]} />}
 		</Authorized>
 	)
 }

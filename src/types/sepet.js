@@ -1,5 +1,3 @@
-import { kurutmaProgramları, yıkamaProgramları } from './programlar'
-
 export class Sepet {
 	/**
 	 *
@@ -40,7 +38,27 @@ const durum = {
 	bitti: 'Bitti'
 }
 
-const örnekSepet = new Sepet('982', yıkamaProgramları.pamuklu, new Date(), '30', kurutmaProgramları.sentetikDolapKuruluğu, true, false, true, durum.kurutmada, 'dsflkldkslkşdsflkşsdfşldsşlsdfksdfşlkşlk')
-const kurutmaYok = new Sepet('77', yıkamaProgramları.sentetik, new Date(), '40', null, false, false, true, durum.makinede, '')
+const örnekSepet = {
+	kurutmaProgramı: 'Spor (2 Saat)',
+	yıkamaSıcaklığı: '30°',
+	yumuşatıcıVar: true,
+	yıkamaProgramı: 'Pamuklu (3 Saat)',
+	uid: 'HWXFZAQVICflZ4GCX5YaDZ2lkg13',
+	ekBilgi: '',
+	durum: 'Sırada',
+	deterjanVar: true,
+	tarih: 1708426603986
+}
+const kurutmaYok = {
+	kurutmaProgramı: 'Spor (2 Saat)',
+	yıkamaSıcaklığı: '30°',
+	yumuşatıcıVar: true,
+	yıkamaProgramı: 'Pamuklu (3 Saat)',
+	uid: 'HWXFZAQVICflZ4GCX5YaDZ2lkg13',
+	ekBilgi: '',
+	durum: 'Sırada',
+	deterjanVar: true,
+	tarih: 1708426603986
+}
 
 export const örnekSepetler = [örnekSepet, kurutmaYok]

@@ -27,8 +27,6 @@ export const Queue = () => {
 		<Authorized>
 			{sepetler && sepetler.map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)}
 
-			<p>Çamaşırcı</p>
-
 			{sepetler && sepetler.map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
