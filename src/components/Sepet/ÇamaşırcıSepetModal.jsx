@@ -106,7 +106,19 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					header="Kurutma makinesini seçiniz"
 					// TODO: Button'a on click ekle
 					// ? Sadece müsait makineleri göster
-					buttons={['Tamam']}
+					buttons={[
+						{
+							text: 'Tamam',
+							handler: async makineId => {
+								try {
+									console.log(makineId)
+									await firebaseClient.kurutmaMakinesineAta(sepet.id, makineId)
+								} catch (error) {
+									console.log(error)
+								}
+							}
+						}
+					]}
 					inputs={[
 						{
 							label: 'Kurutma Makinesi 1',

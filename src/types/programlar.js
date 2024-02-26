@@ -65,3 +65,10 @@ export const kurutmaProgramları = {
 	spor,
 	karışık
 }
+export const getDurationFromProgramKurutma = program => {
+	for (let p of Object.values(kurutmaProgramları)) {
+		if (p.value == program) {
+			return p.duration
+		}
+	}
+}
