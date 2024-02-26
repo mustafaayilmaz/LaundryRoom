@@ -71,7 +71,7 @@ export const Profile = () => {
 								</IonCol>
 								<IonCol class="bakiye-col">
 									<IonButton class="bakiye-buton" expand="block">
-										<IonInput></IonInput>₺
+										<IonInput type="number"></IonInput>₺
 									</IonButton>
 								</IonCol>
 							</IonRow>
