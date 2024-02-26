@@ -12,7 +12,6 @@ import YıkamaChip from './helper/YıkamaChip'
  * @param {{sepet: Sepet}} param0
  */
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
-	console.log(sepet)
 	return (
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
@@ -137,6 +136,14 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						}
 					]}
 				></IonAlert>
+				<IonButton
+					expand="block"
+					onClick={async () => {
+						await firebaseClient.çamaşırıBitir(sepet.id)
+					}}
+				>
+					Çamaşırı Bitir
+				</IonButton>
 			</IonContent>
 		</IonModal>
 	)

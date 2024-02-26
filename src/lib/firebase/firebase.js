@@ -42,13 +42,77 @@ class Firebase {
 			const sepetRef = this.firestore.collection('sepetler').doc(sepetId)
 			const sepet = (await sepetRef.get()).data()
 			await sepetRef.update({ durum: 'Kurutma Makinesinde' })
-			//Buraya geldiği çamaşır makinesini boşaltacak fonksiyon eklenecek
+
+			await this.çamaşırMakinesiniBoşalt(sepetId)
 
 			await this.firestore
 				.collection('kurutmaMakineleri')
 				.doc(kurutmaMakinesiId)
 				.update({ aktifSepetId: sepetId, durum: 'Çalışıyor', tahminiBitiş: Date.now() + getDurationFromProgramKurutma(sepet.kurutmaProgramı) })
-		} catch {}
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async çamaşırMakinesiniBoşalt(sepetId) {
+		const ref = this.firestore.collection('çamaşırMakineleri')
+		const snapshot = await ref.where('aktifSepetId', '==', sepetId).get()
+
+		const makine = snapshot.docs.map(m => {
+			return {
+				id: m.id,
+				...m.data()
+			}
+		})
+
+		if (makine.length === 0) return
+
+		await ref.doc(makine[0].id).update({
+			aktifSepetId: '',
+			durum: 'Bekliyor',
+			tahminiBitiş: ''
+		})
+	}
+
+	async kurutmaMakinesiniBoşalt(sepetId) {
+		try {
+			const ref = this.firestore.collection('kurutmaMakineleri')
+			const snapshot = await ref.where('aktifSepetId', '==', sepetId).get()
+
+			const makine = snapshot.docs.map(m => {
+				return {
+					id: m.id,
+					...m.data()
+				}
+			})
+
+			if (makine.length === 0) return
+
+			await ref.doc(makine[0].id).update({
+				aktifSepetId: '',
+				durum: 'Bekliyor',
+				tahminiBitiş: ''
+			})
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async çamaşırıBitir(sepetId) {
+		try {
+			const sepetRef = this.firestore.collection('sepetler').doc(sepetId)
+			const sepet = (await sepetRef.get()).data()
+
+			if (sepet.kurutmaProgramı !== '') {
+				await this.kurutmaMakinesiniBoşalt(sepetId)
+			} else {
+				await this.çamaşırMakinesiniBoşalt(sepetId)
+			}
+
+			await sepetRef.update({ durum: 'Bitti' })
+		} catch (error) {
+			throw error
+		}
 	}
 }
 
