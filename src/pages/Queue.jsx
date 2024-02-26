@@ -13,7 +13,7 @@ import Loading from './Loading'
 
 export const Queue = () => {
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
-	const [sepetler, loading, error, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection('sepetler').where('uid', '==', user.uid))
+	const [sepetler, loading, error, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection('sepetler'))
 
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedSepet, setSelectedSepet] = useState({})
@@ -25,9 +25,16 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
-			{sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)}
-
-			{sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
+			{user.displayName === 'kullanıcı'
+				? sepetler &&
+					snapshot.docs
+						.map(d => {
+							if (d.data().uid === user.uid) {
+								return { id: d.id, ...d.data() }
+							}
+						})
+						.map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)
+				: sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
 
