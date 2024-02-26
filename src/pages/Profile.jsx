@@ -34,6 +34,14 @@ export const Profile = () => {
 					<IonItem>
 						<IonGrid>
 							<IonRow>
+								<IonCol>Kullanıcı mevcut bakiye</IonCol>
+								<IonCol>user.bakiye</IonCol>
+							</IonRow>
+						</IonGrid>
+					</IonItem>
+					<IonItem>
+						<IonGrid>
+							<IonRow>
 								<IonCol class="bakiye-col">
 									<IonButton class="bakiye-buton" expand="block">
 										10₺
