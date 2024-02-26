@@ -26,15 +26,13 @@ export const Queue = () => {
 	return (
 		<Authorized>
 			{user.displayName === 'kullanıcı'
-				? sepetler &&
-					snapshot.docs
-						.map(d => {
-							if (d.data().uid === user.uid) {
-								return { id: d.id, ...d.data() }
-							}
-						})
-						.map((sepet, i) => <TalebeSepet key={i} sepet={sepet} />)
-				: sepetler && snapshot.docs.map(d => ({ id: d.id, ...d.data() })).map((sepet, i) => <ÇamaşırcıSepet key={i} sepet={sepet} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
+				? snapshot &&
+					snapshot.docs.map((d, i) => {
+						if (d.data().uid === user.uid) {
+							return <TalebeSepet key={i} sepet={{ id: d.id, ...d.data() }} />
+						}
+					})
+				: snapshot && snapshot.docs.map((d, i) => <ÇamaşırcıSepet key={i} sepet={{ id: d.id, ...d.data() }} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
 

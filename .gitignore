@@ -30,3 +30,10 @@ yarn-error.log*
 
 config.js
 index.js
+
+
+dist/
+
+.firebase
+.firebaserc
+firebase.json
