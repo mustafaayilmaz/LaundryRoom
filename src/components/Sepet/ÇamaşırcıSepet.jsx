@@ -1,14 +1,13 @@
 import { IonCard, IonCol, IonGrid, IonRow } from '@ionic/react'
-import { Sepet } from '../../types/sepet'
 import camasir_sepeti from '/camasir_sepeti.png'
 
 import React from 'react'
-import TalebeChip from './helper/TalebeChip'
-import TarihChip from './helper/TarihChip'
-/**
+import DurumChip from './helper/DurumChip' /**
  *
  * @param {{sepet: Sepet}} param0
  */
+import TalebeChip from './helper/TalebeChip'
+import TarihChip from './helper/TarihChip'
 export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedSepet }) {
 	return (
 		<IonCard
@@ -27,6 +26,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 						<TarihChip tarih={new Date(sepet.tarih)} />
 
 						<TalebeChip uid={sepet.uid} />
+						<DurumChip durum={sepet.durum} />
 					</IonCol>
 				</IonRow>
 			</IonGrid>
