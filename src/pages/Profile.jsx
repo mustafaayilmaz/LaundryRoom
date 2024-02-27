@@ -1,21 +1,28 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonHeader, IonInput, IonItem, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 
 import React, { useState } from 'react'
-import { useSignOut } from 'react-firebase-hooks/auth'
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 export const Profile = () => {
 	const [signOut, loading, error] = useSignOut(firebaseClient.auth)
 	const [isOpen, setIsOpen] = useState(false)
+	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
+
 	return (
 		<Authorized>
 			<IonCard className="ion-card">
 				<IonCardHeader className="ion-justify-content-center ion-align-items-center">
-					<IonCardContent>## ₺</IonCardContent>
-					<IonCardTitle>MUSTAFA YILMAZ</IonCardTitle>
+					<IonCardContent>{user.bakiye}₺</IonCardContent>
+					<IonCardTitle>{user.no} nolu Kullanıcı</IonCardTitle>
 				</IonCardHeader>
 			</IonCard>
-			<IonButton onClick={() => setIsOpen(true)}>Bakiye Tanımla</IonButton>
+			{user.displayName === 'çamaşırcı' && (
+				<IonButton expand="block" onClick={() => setIsOpen(true)}>
+					Bakiye Tanımla
+				</IonButton>
+			)}
+
 			<IonModal isOpen={isOpen}>
 				<IonHeader>
 					<IonToolbar>
@@ -83,6 +90,7 @@ export const Profile = () => {
 				</IonButton>
 			</IonModal>
 			<IonButton
+				expand="block"
 				onClick={async () => {
 					const success = await signOut()
 					if (success) {
