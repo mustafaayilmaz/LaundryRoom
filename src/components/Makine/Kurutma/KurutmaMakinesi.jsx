@@ -15,7 +15,6 @@ export default function KurutmaMakinesi({ rol, sepet, makine }) {
 function Talebe({ sepet }) {}
 
 function Çamaşırcı({ makine, sepet }) {
-	console.log(sepet)
 	return (
 		<IonCard className="ion-align-items-center">
 			<IonRow className="ion-align-items-center ion-justify-content-center">

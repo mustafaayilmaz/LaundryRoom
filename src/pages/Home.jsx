@@ -1,12 +1,10 @@
 import { IonAvatar, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonLabel, IonRow, IonSegment, IonSegmentButton } from '@ionic/react'
 import { personCircleOutline, timeOutline } from 'ionicons/icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import laundrymachine from '../../public/laundrymachine.png'
-import KurutmaMakinesi from '../components/Makine/Kurutma/KurutmaMakinesi'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
-import { örnekSepetler } from '../types/sepet'
 import Loading from './Loading'
 
 const örnekMakine = {
@@ -27,15 +25,15 @@ export const Home = () => {
 		return console.log('Error')
 	}
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		const data = await firebaseClient.aktifSepetleriGetir(user.uid)
-	// 		console.log(data)
-	// 		setAktifSepetler(data)
-	// 	}
+	useEffect(() => {
+		const fetchData = async () => {
+			const data = await firebaseClient.aktifSepetleriGetir(user.uid)
+			console.log(data)
+			setAktifSepetler(data)
+		}
 
-	// 	fetchData()
-	// }, [])
+		fetchData()
+	}, [])
 
 	return (
 		<Authorized>
@@ -47,16 +45,166 @@ export const Home = () => {
 					<IonLabel>Kurutma Makinesi</IonLabel>
 				</IonSegmentButton>
 			</IonSegment>
+			{user.displayName === 'kullanıcı' ? (
+				<>
+					{selected === 'çamaşır' ? (
+						<IonCard className="ion-align-items-center">
+							<IonRow className="ion-align-items-center ion-justify-content-center">
+								<IonAvatar className="machine-avatar">
+									<img src={laundrymachine} />
+								</IonAvatar>
+							</IonRow>
+							<IonCardContent>
+								<IonRow className="ion-justify-content-center ion-align-items-center">
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Program</IonLabel>
+									</IonChip>
 
-			{selected === 'çamaşır' ? <MakineTalebe isim={'Çamaşır'} /> : <KurutmaMakinesi rol={'çamaşırcı'} makine={örnekMakine} sepet={örnekSepetler[0]} />}
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Derece</IonLabel>
+									</IonChip>
+								</IonRow>
+							</IonCardContent>
+						</IonCard>
+					) : (
+						<IonCard className="ion-align-items-center">
+							<IonRow className="ion-align-items-center ion-justify-content-center">
+								<IonAvatar className="machine-avatar">
+									<img src={laundrymachine} />
+								</IonAvatar>
+							</IonRow>
+							<IonCardContent>
+								<IonRow className="ion-justify-content-center ion-align-items-center">
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Program</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Derece</IonLabel>
+									</IonChip>
+								</IonRow>
+							</IonCardContent>
+						</IonCard>
+					)}
+				</>
+			) : (
+				<>
+					{selected === 'çamaşır' ? (
+						<IonCard className="ion-align-items-center">
+							<IonRow className="ion-align-items-center ion-justify-content-center">
+								<IonAvatar className="machine-avatar">
+									<img src={laundrymachine} />
+								</IonAvatar>
+								<IonCardHeader>
+									<IonCardTitle>5 Numara</IonCardTitle>
+									<IonCardSubtitle>Çamaşır Makinesi</IonCardSubtitle>
+								</IonCardHeader>
+							</IonRow>
+							<IonCardContent>
+								<IonRow className="ion-justify-content-center ion-align-items-center">
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Çamaşır Sahibi</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Makine numarası</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										{/* TODO: Tahmini bitiş süresi */}
+										<IonIcon icon={timeOutline}></IonIcon>
+										<IonLabel>Tahmini Bitiş</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Program</IonLabel>
+									</IonChip>
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Derece</IonLabel>
+									</IonChip>
+								</IonRow>
+							</IonCardContent>
+						</IonCard>
+					) : (
+						<IonCard className="ion-align-items-center">
+							<IonRow className="ion-align-items-center ion-justify-content-center">
+								<IonAvatar className="machine-avatar">
+									<img src={laundrymachine} />
+								</IonAvatar>
+								<IonCardHeader>
+									<IonCardTitle>5 Numara</IonCardTitle>
+									<IonCardSubtitle>Kurutma Makinesi</IonCardSubtitle>
+								</IonCardHeader>
+							</IonRow>
+							<IonCardContent>
+								<IonRow className="ion-justify-content-center ion-align-items-center">
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Çamaşır Sahibi</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Makine numarası</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										{/* TODO: Tahmini bitiş süresi */}
+										<IonIcon icon={timeOutline}></IonIcon>
+										<IonLabel>Tahmini Bitiş</IonLabel>
+									</IonChip>
+
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Program</IonLabel>
+									</IonChip>
+									<IonChip>
+										<IonIcon icon={personCircleOutline}></IonIcon>
+										<IonLabel>Derece</IonLabel>
+									</IonChip>
+								</IonRow>
+							</IonCardContent>
+						</IonCard>
+					)}
+				</>
+			)}
 		</Authorized>
 	)
 }
 
 export default Home
 
-function MakineTalebe({ isim }) {
-	return (
+function MakineTalebe() {
+	return selected === 'çamaşır' ? (
+		<IonCard className="ion-align-items-center">
+			<IonRow className="ion-align-items-center ion-justify-content-center">
+				<IonAvatar className="machine-avatar">
+					<img src={laundrymachine} />
+				</IonAvatar>
+			</IonRow>
+			<IonCardContent>
+				<IonRow className="ion-justify-content-center ion-align-items-center">
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Program</IonLabel>
+					</IonChip>
+
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Derece</IonLabel>
+					</IonChip>
+				</IonRow>
+			</IonCardContent>
+		</IonCard>
+	) : (
 		<IonCard className="ion-align-items-center">
 			<IonRow className="ion-align-items-center ion-justify-content-center">
 				<IonAvatar className="machine-avatar">
@@ -81,7 +229,47 @@ function MakineTalebe({ isim }) {
 }
 
 function MakineÇamaşırcı() {
-	return (
+	return selected === 'çamaşır' ? (
+		<IonCard className="ion-align-items-center">
+			<IonRow className="ion-align-items-center ion-justify-content-center">
+				<IonAvatar className="machine-avatar">
+					<img src={laundrymachine} />
+				</IonAvatar>
+				<IonCardHeader>
+					<IonCardTitle>5 Numara</IonCardTitle>
+					<IonCardSubtitle>Kurutma Makinesi</IonCardSubtitle>
+				</IonCardHeader>
+			</IonRow>
+			<IonCardContent>
+				<IonRow className="ion-justify-content-center ion-align-items-center">
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Çamaşır Sahibi</IonLabel>
+					</IonChip>
+
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Makine numarası</IonLabel>
+					</IonChip>
+
+					<IonChip>
+						{/* TODO: Tahmini bitiş süresi */}
+						<IonIcon icon={timeOutline}></IonIcon>
+						<IonLabel>Tahmini Bitiş</IonLabel>
+					</IonChip>
+
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Program</IonLabel>
+					</IonChip>
+					<IonChip>
+						<IonIcon icon={personCircleOutline}></IonIcon>
+						<IonLabel>Derece</IonLabel>
+					</IonChip>
+				</IonRow>
+			</IonCardContent>
+		</IonCard>
+	) : (
 		<IonCard className="ion-align-items-center">
 			<IonRow className="ion-align-items-center ion-justify-content-center">
 				<IonAvatar className="machine-avatar">

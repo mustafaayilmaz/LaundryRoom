@@ -114,6 +114,23 @@ class Firebase {
 			throw error
 		}
 	}
+	async aktifSepetleriGetir(userId){
+		try{ 
+			const ref = this.firestore.collection("sepetler")
+			const snapshot = ref.where("user.uid","==","userId").get()
+
+			const sepetler = (await snapshot).docs.map(m => {
+				return {
+					id: m.id,
+					...m.data()
+				}
+			})
+
+		}catch (error){
+			throw(error)
+		}
+
+	}
 }
 
 const firebaseClient = new Firebase()
