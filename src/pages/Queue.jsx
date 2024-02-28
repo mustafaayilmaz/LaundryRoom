@@ -1,4 +1,4 @@
-import { IonFab, IonFabButton, IonIcon } from '@ionic/react'
+import { IonFab, IonFabButton, IonIcon, IonLabel, IonSegment, IonSegmentButton } from '@ionic/react'
 import { addOutline } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -18,6 +18,7 @@ export const Queue = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedSepet, setSelectedSepet] = useState({})
 	const [isSepetOpen, setIsSepetOpen] = useState(false)
+	const [selected, setSelected] = useState('sırada')
 
 	if (userLoading) {
 		return <Loading />
@@ -25,11 +26,19 @@ export const Queue = () => {
 
 	return (
 		<Authorized>
+			<IonSegment value="sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
+				<IonSegmentButton value="sırada">
+					<IonLabel>Sırada Bekleyen</IonLabel>
+				</IonSegmentButton>
+				<IonSegmentButton value="bitti">
+					<IonLabel>Biten</IonLabel>
+				</IonSegmentButton>
+			</IonSegment>
 			{user.displayName === 'kullanıcı'
 				? snapshot &&
 					snapshot.docs.map((d, i) => {
 						if (d.data().uid === user.uid) {
-							return <TalebeSepet key={i} sepet={{ id: d.id, ...d.data() }} />
+							return <TalebeSepet key={i} sepet={{ id: d.id, ...d.data(), selected: d.selected }} />
 						}
 					})
 				: snapshot && snapshot.docs.map((d, i) => <ÇamaşırcıSepet key={i} sepet={{ id: d.id, ...d.data() }} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}

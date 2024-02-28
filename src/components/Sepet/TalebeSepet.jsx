@@ -17,24 +17,48 @@ export default function TalebeSepet({ sepet }) {
 	console.log(sepet)
 
 	return (
-		<IonCard className="ion-align-items-center">
-			<IonGrid>
-				<IonRow className="ion-justify-content-center ion-align-items-center">
-					<IonCol size="5" push=".5">
-						<img src={camasir_sepeti} width={'75%'} height={'75%'} />
-					</IonCol>
+		<>
+			{sepet.selected === 'bitti' && sepet.durum === 'bitti' ? (
+				<IonCard className="ion-align-items-center">
+					<IonGrid>
+						<IonRow className="ion-justify-content-center ion-align-items-center">
+							<IonCol size="5" push=".5">
+								<img src={camasir_sepeti} width={'75%'} height={'75%'} />
+							</IonCol>
 
-					<IonCol size="7">
-						<TarihChip tarih={new Date(sepet.tarih)} />
+							<IonCol size="7">
+								<TarihChip tarih={new Date(sepet.tarih)} />
 
-						<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.yıkamaSıcaklığı} />
+								<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.yıkamaSıcaklığı} />
 
-						<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
+								<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
 
-						<IonChip>{sepet.durum}</IonChip>
-					</IonCol>
-				</IonRow>
-			</IonGrid>
-		</IonCard>
+								<IonChip>{sepet.durum}</IonChip>
+							</IonCol>
+						</IonRow>
+					</IonGrid>
+				</IonCard>
+			) : (
+				<IonCard className="ion-align-items-center">
+					<IonGrid>
+						<IonRow className="ion-justify-content-center ion-align-items-center">
+							<IonCol size="5" push=".5">
+								<img src={camasir_sepeti} width={'75%'} height={'75%'} />
+							</IonCol>
+
+							<IonCol size="7">
+								<TarihChip tarih={new Date(sepet.tarih)} />
+
+								<YıkamaChip yıkamaProgramı={sepet.yıkamaProgramı} derece={sepet.yıkamaSıcaklığı} />
+
+								<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
+
+								<IonChip>{sepet.durum}</IonChip>
+							</IonCol>
+						</IonRow>
+					</IonGrid>
+				</IonCard>
+			)}
+		</>
 	)
 }
