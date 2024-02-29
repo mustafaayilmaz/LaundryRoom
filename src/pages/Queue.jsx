@@ -23,7 +23,8 @@ export const Queue = () => {
 	if (userLoading) {
 		return <Loading />
 	}
-
+	//Çamaşırcının queue sayfasında segment çoklu olacak
+	//Talebede 2 seçenekli olacak
 	return (
 		<Authorized>
 			<IonSegment value="sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>

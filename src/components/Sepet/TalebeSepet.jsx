@@ -18,7 +18,7 @@ export default function TalebeSepet({ sepet }) {
 
 	return (
 		<>
-			{sepet.selected === 'bitti' && sepet.durum === 'bitti' ? (
+			{sepet.selected === 'bitti' || sepet.durum === 'bitti' ? (
 				<IonCard className="ion-align-items-center">
 					<IonGrid>
 						<IonRow className="ion-justify-content-center ion-align-items-center">
