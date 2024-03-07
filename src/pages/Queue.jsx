@@ -46,7 +46,7 @@ export const Queue = () => {
 
 			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
 
-			<IonFab vertical="bottom" horizontal="end">
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton onClick={() => setIsOpen(true)}>
 					<IonIcon icon={addOutline}></IonIcon>
 				</IonFabButton>

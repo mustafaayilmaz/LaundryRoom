@@ -1,7 +1,7 @@
 import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar } from '@ionic/react'
 import { Sepet } from '../../types/sepet'
 
-import React from 'react'
+import React, { useState } from 'react'
 import firebaseClient from '../../lib/firebase/firebase'
 import KurutmaChip from './helper/KurutmaChip'
 import TalebeChip from './helper/TalebeChip'
@@ -12,6 +12,8 @@ import YıkamaChip from './helper/YıkamaChip'
  * @param {{sepet: Sepet}} param0
  */
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
+	const [sepetDurumu, setSepetDurumu] = useState(sepet.durum)
+
 	return (
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
@@ -57,7 +59,36 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>
-				<IonButton id="çamaşır-makinesine-ata">Çamaşır Makinesine Ata</IonButton>
+				{sepet.durum === 'Sırada' && (
+					<IonButton expand="block" id="çamaşır-makinesine-ata">
+						Çamaşır Makinesine Ata
+					</IonButton>
+				)}
+				{sepet.durum === 'Çamaşır Makinesinde' && sepet.kurutmaProgramı !== null && (
+					<IonButton expand="block" id="kurutmaya-ata">
+						Kurutma Makinesine Ata
+					</IonButton>
+				)}
+				{sepet.durum === 'Kurutma Makinesinde' && (
+					<IonButton
+						expand="block"
+						onClick={async () => {
+							await firebaseClient.çamaşırıBitir(sepet.id)
+						}}
+					>
+						Çamaşırı Bitir
+					</IonButton>
+				)}
+				{sepet.durum === 'Çamaşır Makinesinde' && sepet.kurutmaProgramı === null && (
+					<IonButton
+						expand="block"
+						onClick={async () => {
+							await firebaseClient.çamaşırıBitir(sepet.id)
+						}}
+					>
+						Çamaşırı Bitir
+					</IonButton>
+				)}
 				<IonAlert
 					trigger="çamaşır-makinesine-ata"
 					header="Çamaşır makinesini seçiniz"
@@ -99,7 +130,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						}
 					]}
 				></IonAlert>
-				<IonButton id="kurutmaya-ata">Kurutma Makinesine Ata</IonButton>
+
 				<IonAlert
 					trigger="kurutmaya-ata"
 					header="Kurutma makinesini seçiniz"
@@ -136,14 +167,6 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						}
 					]}
 				></IonAlert>
-				<IonButton
-					expand="block"
-					onClick={async () => {
-						await firebaseClient.çamaşırıBitir(sepet.id)
-					}}
-				>
-					Çamaşırı Bitir
-				</IonButton>
 			</IonContent>
 		</IonModal>
 	)
