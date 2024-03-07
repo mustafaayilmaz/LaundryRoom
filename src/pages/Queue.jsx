@@ -1,5 +1,5 @@
 import { IonFab, IonFabButton, IonIcon, IonLabel, IonSegment, IonSegmentButton } from '@ionic/react'
-import { addOutline, checkmarkDoneOutline, fileTrayStackedOutline, flameOutline, waterOutline } from 'ionicons/icons'
+import { addOutline, apertureOutline, checkmarkDoneOutline, fileTrayStackedOutline, waterOutline } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -23,35 +23,33 @@ export const Queue = () => {
 	if (userLoading) {
 		return <Loading />
 	}
-	//Çamaşırcının queue sayfasında segment çoklu olacak
-	//Talebede 2 seçenekli olacak
 	return (
 		<>
 			<Authorized>
 				{user.displayName === 'kullanıcı' ? (
 					<>
-						<IonSegment value="Sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
-							<IonSegmentButton value="Sırada">
+						<IonSegment value={selected}>
+							<IonSegmentButton value="Sırada" onClick={() => setSelected('Sırada')}>
 								<IonLabel>Sırada Bekleyen</IonLabel>
 							</IonSegmentButton>
-							<IonSegmentButton value="Bitti">
+							<IonSegmentButton value="Bitti" onClick={() => setSelected('Bitti')}>
 								<IonLabel>Biten</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
 					</>
 				) : (
 					<>
-						<IonSegment scrollable={true} value="Sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
-							<IonSegmentButton value="Sırada">
+						<IonSegment scrollable={true} value={selected}>
+							<IonSegmentButton value="Sırada" onClick={() => setSelected('Sırada')}>
 								<IonIcon icon={fileTrayStackedOutline}></IonIcon>
 							</IonSegmentButton>
-							<IonSegmentButton value="Çamaşır Makinesinde">
+							<IonSegmentButton value="Çamaşır Makinesinde" onClick={() => setSelected('Çamaşır Makinesinde')}>
 								<IonIcon icon={waterOutline}></IonIcon>
 							</IonSegmentButton>
-							<IonSegmentButton value="Kurutma Makinesinde">
-								<IonIcon icon={flameOutline}></IonIcon>
+							<IonSegmentButton value="Kurutma Makinesinde" onClick={() => setSelected('Kurutma Makinesinde')}>
+								<IonIcon icon={apertureOutline}></IonIcon>
 							</IonSegmentButton>
-							<IonSegmentButton value="Bitti">
+							<IonSegmentButton value="Bitti" onClick={() => setSelected('Bitti')}>
 								<IonIcon icon={checkmarkDoneOutline}></IonIcon>
 							</IonSegmentButton>
 						</IonSegment>

@@ -37,11 +37,11 @@ export const Home = () => {
 
 	return (
 		<Authorized>
-			<IonSegment value="çamaşır" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
-				<IonSegmentButton value="çamaşır">
+			<IonSegment value={selected}>
+				<IonSegmentButton value="çamaşır" onClick={() => setSelected('çamaşır')}>
 					<IonLabel>Çamaşır Makinesi</IonLabel>
 				</IonSegmentButton>
-				<IonSegmentButton value="kurutma">
+				<IonSegmentButton value="kurutma" onClick={() => setSelected('kurutma')}>
 					<IonLabel>Kurutma Makinesi</IonLabel>
 				</IonSegmentButton>
 			</IonSegment>

@@ -10,7 +10,7 @@ export default function KurutmaChip({ kurutmaProgramı }) {
 			) : (
 				<>
 					<IonLabel>Kurutma Yok</IonLabel>
-					<IonIcon icon={closeOutline} className="ion-padding-start"></IonIcon>
+					<IonIcon icon={closeOutline}></IonIcon>
 				</>
 			)}
 		</IonChip>
