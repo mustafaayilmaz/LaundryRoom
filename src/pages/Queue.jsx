@@ -1,5 +1,5 @@
 import { IonFab, IonFabButton, IonIcon, IonLabel, IonSegment, IonSegmentButton } from '@ionic/react'
-import { addOutline } from 'ionicons/icons'
+import { addOutline, checkmarkDoneOutline, fileTrayStackedOutline, flameOutline, waterOutline } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -18,7 +18,7 @@ export const Queue = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedSepet, setSelectedSepet] = useState({})
 	const [isSepetOpen, setIsSepetOpen] = useState(false)
-	const [selected, setSelected] = useState('sırada')
+	const [selected, setSelected] = useState('Sırada')
 
 	if (userLoading) {
 		return <Loading />
@@ -26,33 +26,57 @@ export const Queue = () => {
 	//Çamaşırcının queue sayfasında segment çoklu olacak
 	//Talebede 2 seçenekli olacak
 	return (
-		<Authorized>
-			<IonSegment value="sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
-				<IonSegmentButton value="sırada">
-					<IonLabel>Sırada Bekleyen</IonLabel>
-				</IonSegmentButton>
-				<IonSegmentButton value="bitti">
-					<IonLabel>Biten</IonLabel>
-				</IonSegmentButton>
-			</IonSegment>
-			{user.displayName === 'kullanıcı'
-				? snapshot &&
-					snapshot.docs.map((d, i) => {
-						if (d.data().uid === user.uid) {
-							return <TalebeSepet key={i} sepet={{ id: d.id, ...d.data(), selected: d.selected }} />
-						}
-					})
-				: snapshot && snapshot.docs.map((d, i) => <ÇamaşırcıSepet key={i} sepet={{ id: d.id, ...d.data() }} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} />)}
+		<>
+			<Authorized>
+				{user.displayName === 'kullanıcı' ? (
+					<>
+						<IonSegment value="Sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
+							<IonSegmentButton value="Sırada">
+								<IonLabel>Sırada Bekleyen</IonLabel>
+							</IonSegmentButton>
+							<IonSegmentButton value="Bitti">
+								<IonLabel>Biten</IonLabel>
+							</IonSegmentButton>
+						</IonSegment>
+					</>
+				) : (
+					<>
+						<IonSegment scrollable={true} value="Sırada" className="ion-padding-top" onIonChange={e => setSelected(e.detail.value)}>
+							<IonSegmentButton value="Sırada">
+								<IonIcon icon={fileTrayStackedOutline}></IonIcon>
+							</IonSegmentButton>
+							<IonSegmentButton value="Çamaşır Makinesinde">
+								<IonIcon icon={waterOutline}></IonIcon>
+							</IonSegmentButton>
+							<IonSegmentButton value="Kurutma Makinesinde">
+								<IonIcon icon={flameOutline}></IonIcon>
+							</IonSegmentButton>
+							<IonSegmentButton value="Bitti">
+								<IonIcon icon={checkmarkDoneOutline}></IonIcon>
+							</IonSegmentButton>
+						</IonSegment>
+					</>
+				)}
 
-			<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
+				{user.displayName === 'kullanıcı'
+					? snapshot &&
+						snapshot.docs.map((d, i) => {
+							if (d.data().uid === user.uid) {
+								return <TalebeSepet key={i} sepet={{ id: d.id, ...d.data() }} selected={selected} />
+							}
+						})
+					: snapshot && snapshot.docs.map((d, i) => <ÇamaşırcıSepet key={i} sepet={{ id: d.id, ...d.data() }} setIsSepetOpen={setIsSepetOpen} setSelectedSepet={setSelectedSepet} selected={selected} />)}
 
-			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton onClick={() => setIsOpen(true)}>
-					<IonIcon icon={addOutline}></IonIcon>
-				</IonFabButton>
-			</IonFab>
-			<ÇamaşırTalepFormu isOpen={isOpen} setIsOpen={setIsOpen} />
-		</Authorized>
+				<ÇamaşırcıSepetModal sepet={selectedSepet} isSepetOpen={isSepetOpen} setIsSepetOpen={setIsSepetOpen} />
+
+				<IonFab slot="fixed" vertical="bottom" horizontal="end">
+					<IonFabButton onClick={() => setIsOpen(true)}>
+						<IonIcon icon={addOutline}></IonIcon>
+					</IonFabButton>
+				</IonFab>
+				<ÇamaşırTalepFormu isOpen={isOpen} setIsOpen={setIsOpen} />
+			</Authorized>
+		</>
 	)
 }
 
