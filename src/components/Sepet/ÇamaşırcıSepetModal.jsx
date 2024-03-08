@@ -61,17 +61,15 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				</IonAccordionGroup>
 				{sepet.durum === 'Sırada' && (
 					<>
-						<IonButton id="çamaşır-makinesine-ata" onClick={() => isSepetOpen === false}>
-							Çamaşır Makinesine Ata
-						</IonButton>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="kurutmaya-ata">
+						<IonButton id="çamaşır-makinesine-ata">Çamaşır Makinesine Ata</IonButton>
+						<IonButton disabled="none" id="kurutmaya-ata">
 							Kurutma Makinesine Ata
 						</IonButton>
 						<IonButton
 							disabled="none"
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), isSepetOpen === false
+								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
 							}}
 						>
 							Çamaşırı Bitir
@@ -80,17 +78,15 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				)}
 				{sepet.durum === 'Çamaşır Makinesinde' && sepet.kurutmaProgramı !== null && (
 					<>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="çamaşır-makinesine-ata">
+						<IonButton disabled="none" id="çamaşır-makinesine-ata">
 							Çamaşır Makinesine Ata
 						</IonButton>
-						<IonButton onClick={() => isSepetOpen === false} id="kurutmaya-ata">
-							Kurutma Makinesine Ata
-						</IonButton>
+						<IonButton id="kurutmaya-ata">Kurutma Makinesine Ata</IonButton>
 						<IonButton
 							disabled="none"
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), isSepetOpen === false
+								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
 							}}
 						>
 							Çamaşırı Bitir
@@ -99,16 +95,16 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				)}
 				{sepet.durum === 'Kurutma Makinesinde' && (
 					<>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="çamaşır-makinesine-ata">
+						<IonButton disabled="none" id="çamaşır-makinesine-ata">
 							Çamaşır Makinesine Ata
 						</IonButton>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="kurutmaya-ata">
+						<IonButton disabled="none" id="kurutmaya-ata">
 							Kurutma Makinesine Ata
 						</IonButton>
 						<IonButton
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), isSepetOpen === false
+								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
 							}}
 						>
 							Çamaşırı Bitir
@@ -117,16 +113,16 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				)}
 				{sepet.durum === 'Çamaşır Makinesinde' && sepet.kurutmaProgramı === null && (
 					<>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="çamaşır-makinesine-ata">
+						<IonButton disabled="none" id="çamaşır-makinesine-ata">
 							Çamaşır Makinesine Ata
 						</IonButton>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="kurutmaya-ata">
+						<IonButton disabled="none" id="kurutmaya-ata">
 							Kurutma Makinesine Ata
 						</IonButton>
 						<IonButton
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), isSepetOpen === false
+								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
 							}}
 						>
 							Çamaşırı Bitir
@@ -135,17 +131,17 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				)}
 				{sepet.durum === 'Bitti' && (
 					<>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="çamaşır-makinesine-ata">
+						<IonButton disabled="none" id="çamaşır-makinesine-ata">
 							Çamaşır Makinesine Ata
 						</IonButton>
-						<IonButton onClick={() => isSepetOpen === false} disabled="none" id="kurutmaya-ata">
+						<IonButton disabled="none" id="kurutmaya-ata">
 							Kurutma Makinesine Ata
 						</IonButton>
 						<IonButton
 							disabled="none"
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), isSepetOpen === false
+								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
 							}}
 						>
 							Çamaşırı Bitir
@@ -163,7 +159,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 							handler: async makineId => {
 								try {
 									console.log(makineId)
-									await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId)
+									await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId), setIsSepetOpen(false)
 								} catch (error) {
 									console.log(error)
 								}
@@ -206,6 +202,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 								try {
 									console.log(makineId)
 									await firebaseClient.kurutmaMakinesineAta(sepet.id, makineId)
+									setIsSepetOpen(false)
 								} catch (error) {
 									console.log(error)
 								}

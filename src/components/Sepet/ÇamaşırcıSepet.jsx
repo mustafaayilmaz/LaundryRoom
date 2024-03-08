@@ -11,9 +11,9 @@ import TarihChip from './helper/TarihChip'
 export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedSepet, selected }) {
 	return (
 		<>
-			{selected === 'Bitti' && (
+			{selected === 'Sırada' && (
 				<>
-					{sepet.durum === 'Bitti' && (
+					{sepet.durum === 'Sırada' && (
 						<IonCard
 							className="ion-align-items-center"
 							onClick={() => {
