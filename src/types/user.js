@@ -2,14 +2,14 @@ class User {
 	/**
 	 *
 	 * @param {string} uid
-	 * @param {number} vestiyerNo
+	 * @param {number} no
 	 * @param {number} bakiye
 	 * @param {string} rol
 	 * @param {string[]} sepetler
 	 */
-	constructor(uid, vestiyerNo, bakiye, rol, sepetler) {
+	constructor(uid, no, bakiye, rol, sepetler) {
 		this.uid = uid
-		this.vestiyerNo = vestiyerNo
+		this.no = no
 		this.bakiye = bakiye
 		this.rol = rol
 		this.sepetler = sepetler
