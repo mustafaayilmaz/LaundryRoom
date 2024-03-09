@@ -14,9 +14,6 @@ import YıkamaChip from './helper/YıkamaChip'
  * @returns
  */
 export default function TalebeSepet({ sepet, selected }) {
-	console.log(sepet)
-	console.log(selected)
-
 	return (
 		<>
 			{selected === 'Bitti' && (
