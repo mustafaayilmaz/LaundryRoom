@@ -129,6 +129,26 @@ class Firebase {
 			throw error
 		}
 	}
+	async aktifSepetBilgileriniGetir(aktifSepetId) {
+		try {
+			const ref = this.firestore.collection('sepetler').doc(aktifSepetId)
+			const bilgiler = (await ref).docs.map(m => {
+				return {
+					...m.data()
+				}
+			})
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async bakiyeTanimlama(updatedBalance, no) {
+		try {
+			const ref = await this.firestore.collection('kullanıcılar').doc(no).update({ bakiye: updatedBalance })
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 const firebaseClient = new Firebase()

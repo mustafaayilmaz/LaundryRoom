@@ -9,9 +9,15 @@ import { ücret } from '../../types/ücret'
 import EkBilgiler from './EkBilgiler'
 import Kurutma from './Kurutma'
 import Yıkama from './Yıkama'
-
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const [user, loading, error] = useAuthState(firebaseClient.auth)
+	// console.log(user)
+	// Firestore'dan kullanıcı belgelerini çekmek için query oluştur
+	//Burada user oluşuturulurken user'a uid sini vermeliyiz. Bunun sebebi mevcut sepetleri gösterirken kullanıcı nosu yazacak
+	// const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
+	// // const currentUser = users.where('uid', '==', 'user.uid')
+	// console.log(user)
+	// console.log(users)
 	const [presentAlert] = useIonAlert()
 
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
@@ -32,11 +38,15 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	})
 
 	const onSubmit = async data => {
-		// TODO: Ücreti ekle
-
 		try {
-			const doc = await firebaseClient.addDocument('sepetler', { ...data, uid: user.uid, tarih: Date.now(), durum: 'Sırada' })
-			console.log((await doc.ref.get()).data())
+			const doc = await firebaseClient.firestore.collection('sepetler').add({
+				...data,
+				uid: user.uid,
+				tarih: Date.now(),
+				durum: 'Sırada',
+				no: user.no
+			})
+			console.log((await doc.get()).data())
 			setIsOpen(false)
 		} catch (error) {
 			console.error(error)
@@ -51,7 +61,11 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 			source: CameraSource.Prompt
 		})
 
-		cameraImage.src = `data:image/jpeg;base64,${image.base64String}`
+		// Kameradan alınan resmi görüntüleme
+		const cameraImage = document.getElementById('cameraImage')
+		if (cameraImage) {
+			cameraImage.src = `data:image/jpeg;base64,${image.base64String}`
+		}
 	}
 
 	return (
@@ -60,7 +74,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				<IonToolbar>
 					<IonTitle>Çamaşır Talebi Oluştur</IonTitle>
 					<IonButtons slot="start">
-						<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+						<IonButton onClick={() => setIsOpen(false)}>Kapat</IonButton>
 					</IonButtons>
 				</IonToolbar>
 			</IonHeader>
@@ -68,13 +82,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<IonRow>
 						<IonCol style={{ display: 'flex', justifyContent: 'center' }}>
-							<img
-								style={{ width: '125px', height: 'auto' }}
-								onClick={() => {
-									takePicture()
-								}}
-								src={camasir_sepeti}
-							/>
+							<img style={{ width: '125px', height: 'auto' }} onClick={takePicture} src={camasir_sepeti} alt="Çamaşır Sepeti" />
 						</IonCol>
 					</IonRow>
 

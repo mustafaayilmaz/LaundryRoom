@@ -4,6 +4,7 @@ import React from 'react'
 import laundrymachine from '../../../public/laundrymachine.png'
 
 export default function ÇamaşırcıMakine({ makineler }) {
+	console.log(makineler)
 	return (
 		<IonCard className="ion-align-items-center">
 			<IonRow className="ion-align-items-center ion-justify-content-center">

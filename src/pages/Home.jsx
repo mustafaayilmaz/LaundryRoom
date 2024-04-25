@@ -8,11 +8,6 @@ import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
 
-const örnekMakine = {
-	id: 'Çamaşır Makinesi 1',
-	tahminiBitiş: 1708431147
-}
-
 export const Home = () => {
 	const [aktifSepetler, setAktifSepetler] = useState([])
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
@@ -47,6 +42,7 @@ export const Home = () => {
 				? snapshot &&
 					snapshot.docs.map((d, i) => {
 						if (d.data().uid === user.uid) {
+							console.log(d)
 							return <>{selected === 'çamaşırMakineleri' ? <TalebeMakine key={i} makineler={{ ...d.data() }} /> : <TalebeMakine key={i} makineler={{ ...d.data() }} />}</>
 						}
 					})
