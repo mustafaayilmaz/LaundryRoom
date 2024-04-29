@@ -1,7 +1,8 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 
@@ -12,15 +13,17 @@ export const Profile = () => {
 	const [choosedUser, setChoosedUser] = useState([])
 	const [balance, setBalance] = useState('')
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
+	const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
+	useEffect(() => {
+		const fetchUser = async () => {
+			const snapshot = await firebaseClient.firestore.collection('kullanıcılar').where('no', '==', choosed).get()
 
-	const fetchUser = async () => {
-		const snapshot = await firebaseClient.firestore.collection('kullanıcılar').where('no', '==', choosed).get()
-		snapshot.docs.map(doc => setChoosedUser(doc.data(0)))
-		console.log(snapshot.docs.map(doc => doc.data(0)))
-	}
+			snapshot.docs.map(doc => setChoosedUser(doc.data(0)))
+			console.log(snapshot.docs.map(doc => doc.data(0)))
+		}
+		fetchUser()
+	}, [choosed])
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
-
-	console.log(updatedBalance)
 
 	return (
 		<Authorized>
@@ -47,18 +50,19 @@ export const Profile = () => {
 				</IonHeader>
 				<IonContent className="ion-padding">
 					<IonItem>
-						<IonSelect
-							label="Kullanıcı no seçiniz"
-							placeholder="Kullanıcı No"
-							onIonChange={e => {
-								setChoosed(e.detail.value), fetchUser()
-							}}
-						>
-							<IonSelectOption value="1">1</IonSelectOption>
-							<IonSelectOption value="2">2</IonSelectOption>
-							<IonSelectOption value="3">3</IonSelectOption>
+						<IonSelect label="Kullanıcı no seçiniz" placeholder="Kullanıcı No" value={choosed} onIonChange={e => setChoosed(e.detail.value)}>
+							{users &&
+								users.map(
+									(k, index) =>
+										k.rol === 'kullanıcı' && (
+											<IonSelectOption key={index} value={k.no}>
+												{k.no}
+											</IonSelectOption>
+										)
+								)}
 						</IonSelect>
 					</IonItem>
+
 					<IonItem>
 						<IonGrid>
 							<IonRow>
@@ -99,7 +103,7 @@ export const Profile = () => {
 								</IonCol>
 								<IonCol class="bakiye-col">
 									<IonButton class="bakiye-buton" expand="block">
-										<IonInput type="number" onIonInput={e => setBalance(e.detail.value)}></IonInput>₺
+										<IonInput type="number" value={balance} onIonChange={e => setBalance(e.detail.value)}></IonInput>₺
 									</IonButton>
 								</IonCol>
 							</IonRow>
@@ -109,7 +113,7 @@ export const Profile = () => {
 					<IonButton
 						expand="block"
 						onClick={async () => {
-							await firebaseClient.bakiyeTanimlama(parseFloat(updatedBalance), choosed), setIsOpen(false)
+							await firebaseClient.bakiyeTanimlama(updatedBalance, choosedUser.userUid)
 						}}
 					>
 						Değişiklikleri Onayla

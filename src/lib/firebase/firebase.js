@@ -142,9 +142,9 @@ class Firebase {
 		}
 	}
 
-	async bakiyeTanimlama(updatedBalance, no) {
+	async bakiyeTanimlama(updatedBalance, userUid) {
 		try {
-			const ref = await this.firestore.collection('kullanıcılar').doc(no).update({ bakiye: updatedBalance })
+			const ref = await this.firestore.collection('kullanıcılar').doc(userUid).update({ bakiye: updatedBalance })
 		} catch (error) {
 			throw error
 		}
