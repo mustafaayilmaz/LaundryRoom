@@ -18,7 +18,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
 				<IonToolbar>
-					<IonTitle>Sepet {sepet.id}</IonTitle>
+					<IonTitle>Sepet {sepet.no} kullanıcının sepeti</IonTitle>
 					<IonButtons slot="start">
 						<IonButton onClick={() => setIsSepetOpen(false)}>Close</IonButton>
 					</IonButtons>
@@ -28,7 +28,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				<IonList lines="none">
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Sepet Sahibi</IonLabel>
-						<TalebeChip uid={sepet.uid} />
+						<TalebeChip uid={sepet.no} />
 					</IonItem>
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Yıkama Programı</IonLabel>

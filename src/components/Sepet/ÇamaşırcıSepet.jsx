@@ -29,7 +29,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 									<IonCol size="7">
 										<TarihChip tarih={new Date(sepet.tarih)} />
 
-										<TalebeChip uid={sepet.uid} />
+										<TalebeChip uid={sepet.no} />
 										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>
@@ -56,7 +56,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 									<IonCol size="7">
 										<TarihChip tarih={new Date(sepet.tarih)} />
 
-										<TalebeChip uid={sepet.uid} />
+										<TalebeChip uid={sepet.no} />
 										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>
@@ -83,7 +83,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 									<IonCol size="7">
 										<TarihChip tarih={new Date(sepet.tarih)} />
 
-										<TalebeChip uid={sepet.uid} />
+										<TalebeChip uid={sepet.no} />
 										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>
@@ -110,7 +110,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 									<IonCol size="7">
 										<TarihChip tarih={new Date(sepet.tarih)} />
 
-										<TalebeChip uid={sepet.uid} />
+										<TalebeChip uid={sepet.no} />
 										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>

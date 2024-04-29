@@ -11,16 +11,15 @@ import Kurutma from './Kurutma'
 import Yıkama from './Yıkama'
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const [user, loading, error] = useAuthState(firebaseClient.auth)
-	// console.log(user)
-	// Firestore'dan kullanıcı belgelerini çekmek için query oluştur
-	//Burada user oluşuturulurken user'a uid sini vermeliyiz. Bunun sebebi mevcut sepetleri gösterirken kullanıcı nosu yazacak
-	// const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
-	// // const currentUser = users.where('uid', '==', 'user.uid')
-	// console.log(user)
-	// console.log(users)
 	const [presentAlert] = useIonAlert()
-
+	const [info, setInfo] = useState([])
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
+
+	const fetchUserInfo = async () => {
+		const info = (await firebaseClient.firestore.collection('kullanıcılar').doc(user.uid).get()).data()
+		setInfo(info)
+		console.log(info)
+	}
 
 	const {
 		register,
@@ -44,7 +43,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				uid: user.uid,
 				tarih: Date.now(),
 				durum: 'Sırada',
-				no: user.no
+				no: info.no
 			})
 			console.log((await doc.get()).data())
 			setIsOpen(false)
@@ -94,7 +93,13 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 					<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 
-					<IonButton expand="block" type="submit">
+					<IonButton
+						expand="block"
+						type="submit"
+						onClick={() => {
+							fetchUserInfo()
+						}}
+					>
 						Çamaşır Talebi Yolla
 					</IonButton>
 				</form>

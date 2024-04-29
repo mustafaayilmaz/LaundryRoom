@@ -49,7 +49,7 @@ export const Home = () => {
 				: snapshot &&
 					snapshot.docs.map((d, i) => {
 						if (d.data().uid !== user.uid) {
-							return <>{selected === 'çamaşırMakineleri' ? <ÇamaşırcıMakine key={i} makineler={{ ...d.data() }} /> : <ÇamaşırcıMakine key={i} makineler={{ ...d.data() }} />}</>
+							return <>{selected === 'çamaşırMakineleri' ? <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} /> : <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} />}</>
 						}
 					})}
 		</Authorized>
