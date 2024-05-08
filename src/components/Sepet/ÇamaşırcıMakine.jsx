@@ -8,7 +8,6 @@ export const ÇamaşırcıMakine = ({ makineler }) => {
 	const [sepetData, setSepetData] = useState([])
 	const [userData, setUserData] = useState([])
 	const tarih = new Date(makineler.tahminiBitiş)
-	console.log(makineler)
 	useEffect(() => {
 		const fetchSepet = async () => {
 			const sepet = (await firebaseClient.firestore.collection('sepetler').doc(makineler.aktifSepetId).get()).data()
@@ -21,7 +20,7 @@ export const ÇamaşırcıMakine = ({ makineler }) => {
 			// console.log(userData)
 		}
 		{
-			makineler !== 0 && fetchSepet()
+			makineler.aktifSepetId !== '' && fetchSepet()
 		}
 	}, [makineler])
 

@@ -23,6 +23,12 @@ export const Queue = () => {
 	if (userLoading) {
 		return <Loading />
 	}
+	if (loading) {
+		return <Loading />
+	}
+	if (!user || userError) {
+		return console.log('Error')
+	}
 	return (
 		<>
 			<Authorized>

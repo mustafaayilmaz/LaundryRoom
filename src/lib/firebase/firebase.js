@@ -11,6 +11,7 @@ class Firebase {
 	constructor() {
 		this.firestore = fb.firestore()
 		this.auth = fb.auth()
+		this.storage = fb.storage()
 	}
 
 	async addDocument(collection, data) {
@@ -145,6 +146,18 @@ class Firebase {
 	async bakiyeTanimlama(updatedBalance, userUid) {
 		try {
 			const ref = await this.firestore.collection('kullanıcılar').doc(userUid).update({ bakiye: updatedBalance })
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async uploadFile(storagePath, file) {
+		try {
+			let storageRef = this.storage.ref(storagePath)
+			//storageRef = storageRef.child(file.name)
+			const snapshot = await storageRef.put(file)
+			const downloadURL = await snapshot.ref.getDownloadURL()
+			return downloadURL
 		} catch (error) {
 			throw error
 		}

@@ -9,7 +9,6 @@ import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
 
 export const Home = () => {
-	const [aktifSepetler, setAktifSepetler] = useState([])
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
 	const [selected, setSelected] = useState('çamaşırMakineleri')
 	const [makineler, loading, error, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection(selected))
@@ -28,7 +27,7 @@ export const Home = () => {
 	}
 
 	return (
-		<Authorized>
+		<Authorized key={makineler.no}>
 			<IonSegment value={selected}>
 				<IonSegmentButton value="çamaşırMakineleri" onClick={() => setSelected('çamaşırMakineleri')}>
 					<IonLabel>Çamaşır Makinesi</IonLabel>
@@ -38,20 +37,20 @@ export const Home = () => {
 				</IonSegmentButton>
 			</IonSegment>
 
-			{user.displayName === 'kullanıcı'
-				? snapshot &&
-					snapshot.docs.map((d, i) => {
-						if (d.data().uid === user.uid) {
-							console.log(d)
-							return <>{selected === 'çamaşırMakineleri' ? <TalebeMakine key={i} makineler={{ ...d.data() }} /> : <TalebeMakine key={i} makineler={{ ...d.data() }} />}</>
-						}
-					})
-				: snapshot &&
-					snapshot.docs.map((d, i) => {
-						if (d.data().uid !== user.uid) {
-							return <>{selected === 'çamaşırMakineleri' ? <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} /> : <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} />}</>
-						}
-					})}
+			{user.displayName === 'kullanıcı' &&
+				snapshot &&
+				snapshot.docs.map((d, i) => {
+					if (d.data().uid !== user.uid) {
+						return <>{selected === 'çamaşırMakineleri' ? <TalebeMakine key={i} makineler={{ ...d.data(), selected: selected }} /> : <TalebeMakine key={i} makineler={{ ...d.data(), selected: selected }} />}</>
+					}
+				})}
+			{user.displayName !== 'kullanıcı' &&
+				snapshot &&
+				snapshot.docs.map((d, i) => {
+					if (d.data().uid !== user.uid) {
+						return <>{selected === 'çamaşırMakineleri' ? <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} /> : <ÇamaşırcıMakine key={i} makineler={{ ...d.data(), selected: selected }} />}</>
+					}
+				})}
 		</Authorized>
 	)
 }

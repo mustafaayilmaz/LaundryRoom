@@ -1,7 +1,8 @@
 import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar } from '@ionic/react'
 import { Sepet } from '../../types/sepet'
 
-import React, { useState } from 'react'
+import React from 'react'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 import firebaseClient from '../../lib/firebase/firebase'
 import KurutmaChip from './helper/KurutmaChip'
 import TalebeChip from './helper/TalebeChip'
@@ -12,7 +13,9 @@ import YıkamaChip from './helper/YıkamaChip'
  * @param {{sepet: Sepet}} param0
  */
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
-	const [sepetDurumu, setSepetDurumu] = useState(sepet.durum)
+	const [çamaşırMakineleri, çamaşırloading, çamaşırError] = useCollectionData(firebaseClient.firestore.collection('çamaşırMakineleri'))
+	const [kurutmaMakineleri, kurutmaloading, kurutmaError] = useCollectionData(firebaseClient.firestore.collection('kurutmaMakineleri'))
+	console.log(çamaşırMakineleri)
 
 	return (
 		<IonModal isOpen={isSepetOpen}>
@@ -148,47 +151,40 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						</IonButton>
 					</>
 				)}
-				<IonAlert
-					trigger="çamaşır-makinesine-ata"
-					header="Çamaşır makinesini seçiniz"
-					// TODO: Button'a on click ekle
-					// ? Sadece müsait makineleri göster
-					buttons={[
-						{
-							text: 'Tamam',
-							handler: async makineId => {
-								try {
-									console.log(makineId)
-									await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId), setIsSepetOpen(false)
-								} catch (error) {
-									console.log(error)
+				{çamaşırMakineleri && çamaşırMakineleri.length > 0 && (
+					<IonAlert
+						trigger="çamaşır-makinesine-ata"
+						header="Çamaşır makinesini seçiniz"
+						// ? Sadece müsait makineleri göster
+						buttons={[
+							{
+								text: 'Tamam',
+								handler: async makineId => {
+									try {
+										console.log(makineId)
+										await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId), setIsSepetOpen(false)
+									} catch (error) {
+										console.log(error)
+									}
 								}
 							}
-						}
-					]}
-					inputs={[
-						{
-							label: 'Çamaşır Makinesi 1',
-							type: 'radio',
-							value: 'Çamaşır Makinesi 1'
-						},
-						{
-							label: 'Çamaşır Makinesi 2',
-							type: 'radio',
-							value: 'Çamaşır Makinesi 2'
-						},
-						{
-							label: 'Çamaşır Makinesi 3',
-							type: 'radio',
-							value: 'Çamaşır Makinesi 3'
-						},
-						{
-							label: 'Çamaşır Makinesi 4',
-							type: 'radio',
-							value: 'Çamaşır Makinesi 4'
-						}
-					]}
-				></IonAlert>
+						]}
+						inputs={çamaşırMakineleri
+							?.filter(makine => makine.durum === 'Bekliyor')
+							?.map(makine => ({
+								label: 'Çamaşır Makinesi ${makine.no}',
+								type: 'radio',
+								value: 'Çamaşır Makinesi ${makine.no}'
+							}))
+							?.filter(makine => makine.durum === 'Çalışıyor' && makine.durum === 'Arızalı')
+							?.map(makine => ({
+								label: 'Çamaşır Makinesi ${makine.no}',
+								type: 'radio',
+								value: 'Çamaşır Makinesi ${makine.no}',
+								disabled: 'none'
+							}))}
+					></IonAlert>
+				)}
 
 				<IonAlert
 					trigger="kurutmaya-ata"

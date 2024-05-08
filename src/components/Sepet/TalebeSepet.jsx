@@ -1,9 +1,10 @@
-import { IonCard, IonChip, IonCol, IonGrid, IonRow } from '@ionic/react'
+import { IonCard, IonCol, IonGrid, IonRow } from '@ionic/react'
 
 import camasir_sepeti from '/camasir_sepeti.png'
 
 import React from 'react'
 import { Sepet } from '../../types/sepet'
+import DurumChip from './helper/DurumChip'
 import KurutmaChip from './helper/KurutmaChip'
 import TarihChip from './helper/TarihChip'
 import YıkamaChip from './helper/YıkamaChip'
@@ -33,7 +34,7 @@ export default function TalebeSepet({ sepet, selected }) {
 
 										<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
 
-										<IonChip>{sepet.durum}</IonChip>
+										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>
 							</IonGrid>
@@ -58,7 +59,7 @@ export default function TalebeSepet({ sepet, selected }) {
 
 										<KurutmaChip kurutmaProgramı={sepet.kurutmaProgramı} />
 
-										<IonChip>{sepet.durum}</IonChip>
+										<DurumChip durum={sepet.durum} />
 									</IonCol>
 								</IonRow>
 							</IonGrid>

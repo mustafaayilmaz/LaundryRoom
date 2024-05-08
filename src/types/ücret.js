@@ -1,6 +1,6 @@
 export const ücret = {
-	taban: 5,
-	kurutma: 3,
-	deterjan: -3,
+	taban: 7,
+	kurutma: 5,
+	deterjan: -2,
 	yumuşatıcı: 0
 }

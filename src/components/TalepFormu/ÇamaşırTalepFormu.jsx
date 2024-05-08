@@ -5,15 +5,27 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { useForm } from 'react-hook-form'
 import camasir_sepeti from '../../../public/camasir_sepeti.png'
 import firebaseClient from '../../lib/firebase/firebase'
+
+import Loading from '../../pages/Loading'
 import { ücret } from '../../types/ücret'
 import EkBilgiler from './EkBilgiler'
 import Kurutma from './Kurutma'
 import Yıkama from './Yıkama'
+
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
-	const [user, loading, error] = useAuthState(firebaseClient.auth)
+	const [user, loading, userError] = useAuthState(firebaseClient.auth)
 	const [presentAlert] = useIonAlert()
 	const [info, setInfo] = useState([])
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
+
+	const [capturedImage, setCapturedImage] = useState(null)
+
+	if (loading) {
+		return <Loading />
+	}
+	if (!user || userError) {
+		return console.log('Error')
+	}
 
 	const fetchUserInfo = async () => {
 		const info = (await firebaseClient.firestore.collection('kullanıcılar').doc(user.uid).get()).data()
@@ -38,12 +50,14 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 	const onSubmit = async data => {
 		try {
+			const downloadURL = await firebaseClient.uploadFile(user.uid, capturedImage)
 			const doc = await firebaseClient.firestore.collection('sepetler').add({
 				...data,
 				uid: user.uid,
 				tarih: Date.now(),
 				durum: 'Sırada',
-				no: info.no
+				no: info.no,
+				image: downloadURL
 			})
 			console.log((await doc.get()).data())
 			setIsOpen(false)
@@ -53,17 +67,39 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	}
 
 	const takePicture = async () => {
-		const image = await Camera.getPhoto({
-			quality: 90,
-			allowEditing: true,
-			resultType: CameraResultType.Base64,
-			source: CameraSource.Prompt
-		})
+		try {
+			const image = await Camera.getPhoto({
+				quality: 90,
+				allowEditing: true,
+				resultType: CameraResultType.Base64,
+				source: CameraSource.Prompt
+			})
 
-		// Kameradan alınan resmi görüntüleme
-		const cameraImage = document.getElementById('cameraImage')
-		if (cameraImage) {
-			cameraImage.src = `data:image/jpeg;base64,${image.base64String}`
+			// Ekran görüntüsü almadan önce
+			console.log('Before setCapturedImage:', image)
+
+			if (image && image.base64String) {
+				setCapturedImage(`data:image/jpeg;base64,${image.base64String}`)
+			} else {
+				presentAlert({
+					header: 'Hata',
+					message: 'Resim alınırken bir hata oluştu. Lütfen tekrar deneyin.',
+					buttons: ['Tamam']
+				})
+			}
+
+			// onSubmit fonksiyonunu çağırma işlemi
+			onSubmit()
+
+			// Ekran görüntüsü almadan sonra
+			console.log('After setCapturedImage:', capturedImage)
+		} catch (error) {
+			console.error(error)
+			presentAlert({
+				header: 'Hata',
+				message: 'Resim alınırken bir hata oluştu. Lütfen tekrar deneyin.',
+				buttons: ['Tamam']
+			})
 		}
 	}
 
@@ -73,15 +109,21 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				<IonToolbar>
 					<IonTitle>Çamaşır Talebi Oluştur</IonTitle>
 					<IonButtons slot="start">
-						<IonButton onClick={() => setIsOpen(false)}>Kapat</IonButton>
+						<IonButton
+							onClick={() => {
+								setIsOpen(false)
+							}}
+						>
+							Kapat
+						</IonButton>
 					</IonButtons>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className="ion-padding">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<IonRow>
-						<IonCol style={{ display: 'flex', justifyContent: 'center' }}>
-							<img style={{ width: '125px', height: 'auto' }} onClick={takePicture} src={camasir_sepeti} alt="Çamaşır Sepeti" />
+						<IonCol style={{ display: 'flex', justifyContent: 'center' }} onClick={() => fetchUserInfo()}>
+							{capturedImage === null ? <img style={{ width: '125px', height: 'auto' }} onClick={takePicture} src={camasir_sepeti} alt="Çamaşır Sepeti" /> : <img style={{ width: '125px', height: 'auto' }} src={capturedImage} alt="Çamaşır Sepeti" />}
 						</IonCol>
 					</IonRow>
 
@@ -93,13 +135,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 					<h3>Toplam Fiyat {toplamÜcret}₺</h3>
 
-					<IonButton
-						expand="block"
-						type="submit"
-						onClick={() => {
-							fetchUserInfo()
-						}}
-					>
+					<IonButton expand="block" type="submit">
 						Çamaşır Talebi Yolla
 					</IonButton>
 				</form>

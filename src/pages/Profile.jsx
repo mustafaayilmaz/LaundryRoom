@@ -5,6 +5,7 @@ import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
+import Loading from './Loading'
 
 export const Profile = () => {
 	const [signOut, loading, error] = useSignOut(firebaseClient.auth)
@@ -24,6 +25,16 @@ export const Profile = () => {
 		fetchUser()
 	}, [choosed])
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
+
+	if (loading) {
+		return <Loading />
+	}
+	if (userLoading) {
+		return <Loading />
+	}
+	if (usersLoading) {
+		return <Loading />
+	}
 
 	return (
 		<Authorized>
