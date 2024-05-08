@@ -1,6 +1,6 @@
 const config = {
 	appId: 'io.ionic.starter',
-	appName: 'pet-match',
+	appName: 'laundry-room',
 	webDir: 'dist',
 	server: {
 		androidScheme: 'https'

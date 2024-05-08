@@ -1,7 +1,7 @@
 {
-  "name": "pet-match",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
+	"name": "laundry-room",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "react-vite"
 }
