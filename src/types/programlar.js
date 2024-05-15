@@ -46,17 +46,17 @@ const pamukluDolapKuruluğu = {
 
 const sentetikDolapKuruluğu = {
 	value: 'Sentetik Dolap Kuruluğu (2 Saat)',
-	duration: convertMinutesToMilliSeconds(180)
+	duration: convertMinutesToMilliSeconds(120)
 }
 
 const spor = {
 	value: 'Spor (2 Saat)',
-	duration: convertMinutesToMilliSeconds(180)
+	duration: convertMinutesToMilliSeconds(120)
 }
 
 const karışık = {
 	value: 'Karışık (2.5 Saat)',
-	duration: convertMinutesToMilliSeconds(180)
+	duration: convertMinutesToMilliSeconds(150)
 }
 
 export const kurutmaProgramları = {

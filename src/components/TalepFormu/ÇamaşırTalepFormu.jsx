@@ -80,6 +80,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 
 			if (image && image.base64String) {
 				setCapturedImage(`data:image/jpeg;base64,${image.base64String}`)
+				console.log(capturedImage)
 			} else {
 				presentAlert({
 					header: 'Hata',
@@ -87,9 +88,6 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 					buttons: ['Tamam']
 				})
 			}
-
-			// onSubmit fonksiyonunu çağırma işlemi
-			onSubmit()
 
 			// Ekran görüntüsü almadan sonra
 			console.log('After setCapturedImage:', capturedImage)

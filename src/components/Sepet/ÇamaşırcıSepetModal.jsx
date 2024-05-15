@@ -15,8 +15,6 @@ import YıkamaChip from './helper/YıkamaChip'
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
 	const [çamaşırMakineleri, çamaşırloading, çamaşırError] = useCollectionData(firebaseClient.firestore.collection('çamaşırMakineleri'))
 	const [kurutmaMakineleri, kurutmaloading, kurutmaError] = useCollectionData(firebaseClient.firestore.collection('kurutmaMakineleri'))
-	console.log(çamaşırMakineleri)
-
 	return (
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
@@ -155,7 +153,6 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					<IonAlert
 						trigger="çamaşır-makinesine-ata"
 						header="Çamaşır makinesini seçiniz"
-						// ? Sadece müsait makineleri göster
 						buttons={[
 							{
 								text: 'Tamam',
@@ -169,60 +166,41 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 								}
 							}
 						]}
-						inputs={çamaşırMakineleri
-							?.filter(makine => makine.durum === 'Bekliyor')
-							?.map(makine => ({
-								label: 'Çamaşır Makinesi ${makine.no}',
-								type: 'radio',
-								value: 'Çamaşır Makinesi ${makine.no}'
-							}))
-							?.filter(makine => makine.durum === 'Çalışıyor' && makine.durum === 'Arızalı')
-							?.map(makine => ({
-								label: 'Çamaşır Makinesi ${makine.no}',
-								type: 'radio',
-								value: 'Çamaşır Makinesi ${makine.no}',
-								disabled: 'none'
-							}))}
+						inputs={çamaşırMakineleri.map(makine => ({
+							label: `Çamaşır makinesi ${makine.no}`,
+							type: 'radio',
+							value: `Çamaşır makinesi ${makine.no}`,
+							disabled: makine.durum === 'Çalışıyor' || makine.durum === 'Arızalı'
+						}))}
 					></IonAlert>
 				)}
 
-				<IonAlert
-					trigger="kurutmaya-ata"
-					header="Kurutma makinesini seçiniz"
-					// TODO: Button'a on click ekle
-					// ? Sadece müsait makineleri göster
-					buttons={[
-						{
-							text: 'Tamam',
-							handler: async makineId => {
-								try {
-									console.log(makineId)
-									await firebaseClient.kurutmaMakinesineAta(sepet.id, makineId)
-									setIsSepetOpen(false)
-								} catch (error) {
-									console.log(error)
+				{kurutmaMakineleri && kurutmaMakineleri.length > 0 && (
+					<IonAlert
+						trigger="kurutmaya-ata"
+						header="Kurutma makinesini seçiniz"
+						buttons={[
+							{
+								text: 'Tamam',
+								handler: async makineId => {
+									try {
+										console.log(makineId)
+										await firebaseClient.kurutmaMakinesineAta(sepet.id, makineId)
+										setIsSepetOpen(false)
+									} catch (error) {
+										console.log(error)
+									}
 								}
 							}
-						}
-					]}
-					inputs={[
-						{
-							label: 'Kurutma Makinesi 1',
+						]}
+						inputs={kurutmaMakineleri.map(makine => ({
+							label: `Çamaşır makinesi ${makine.no}`,
 							type: 'radio',
-							value: 'Kurutma Makinesi 1'
-						},
-						{
-							label: 'Kurutma Makinesi 2',
-							type: 'radio',
-							value: 'Kurutma Makinesi 2'
-						},
-						{
-							label: 'Kurutma Makinesi 3',
-							type: 'radio',
-							value: 'Kurutma Makinesi 3'
-						}
-					]}
-				></IonAlert>
+							value: `Çamaşır makinesi ${makine.no}`,
+							disabled: makine.durum === 'Çalışıyor' || makine.durum === 'Arızalı'
+						}))}
+					></IonAlert>
+				)}
 			</IonContent>
 		</IonModal>
 	)

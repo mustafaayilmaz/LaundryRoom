@@ -154,7 +154,7 @@ class Firebase {
 	async uploadFile(storagePath, file) {
 		try {
 			let storageRef = this.storage.ref(storagePath)
-			//storageRef = storageRef.child(file.name)
+			storageRef = storageRef.child(storagePath)
 			const snapshot = await storageRef.put(file)
 			const downloadURL = await snapshot.ref.getDownloadURL()
 			return downloadURL

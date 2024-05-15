@@ -3,29 +3,34 @@ import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardT
 import React, { useEffect, useState } from 'react'
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useHistory } from 'react-router'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
 
 export const Profile = () => {
 	const [signOut, loading, error] = useSignOut(firebaseClient.auth)
+	const history = useHistory()
+
 	const [isOpen, setIsOpen] = useState(false)
 	const [choosed, setChoosed] = useState('')
 	const [choosedUser, setChoosedUser] = useState([])
 	const [balance, setBalance] = useState('')
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
 	const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
+	const [currentUser, setCurrentUser] = useState([])
 	useEffect(() => {
 		const fetchUser = async () => {
 			const snapshot = await firebaseClient.firestore.collection('kullanıcılar').where('no', '==', choosed).get()
+			const getUser = await firebaseClient.firestore.collection('kullanıcılar').where('userUid', '==', user.uid).get()
+			getUser.docs.map(doc => setCurrentUser(doc.data(0)))
 
 			snapshot.docs.map(doc => setChoosedUser(doc.data(0)))
-			console.log(snapshot.docs.map(doc => doc.data(0)))
 		}
 		fetchUser()
 	}, [choosed])
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
-
+	const goLogin = () => history.push('/login')
 	if (loading) {
 		return <Loading />
 	}
@@ -39,15 +44,29 @@ export const Profile = () => {
 	return (
 		<Authorized>
 			<IonCard className="ion-card">
-				<IonCardHeader className="ion-justify-content-center ion-align-items-center">
-					<IonCardContent>{user.bakiye}₺</IonCardContent>
-					<IonCardTitle>{user.no} nolu Kullanıcı</IonCardTitle>
-				</IonCardHeader>
+				{user && (
+					<>
+						{user.displayName === 'çamaşırcı' ? (
+							<IonCardHeader className="ion-justify-content-center ion-align-items-center">
+								<IonCardTitle>Çamaşırcı</IonCardTitle>
+							</IonCardHeader>
+						) : (
+							<IonCardHeader className="ion-justify-content-center ion-align-items-center">
+								<IonCardContent>{currentUser.bakiye}₺</IonCardContent>
+								<IonCardTitle>{currentUser.no} nolu Kullanıcı</IonCardTitle>
+							</IonCardHeader>
+						)}
+					</>
+				)}
 			</IonCard>
-			{user.displayName === 'çamaşırcı' && (
-				<IonButton expand="block" onClick={() => setIsOpen(true)}>
-					Bakiye Tanımla
-				</IonButton>
+			{user && (
+				<>
+					{user.displayName === 'çamaşırcı' && (
+						<IonButton expand="block" onClick={() => setIsOpen(true)}>
+							Bakiye Tanımla
+						</IonButton>
+					)}
+				</>
 			)}
 
 			<IonModal isOpen={isOpen}>
@@ -135,6 +154,7 @@ export const Profile = () => {
 				expand="block"
 				onClick={async () => {
 					const success = await signOut()
+					goLogin()
 					if (success) {
 						console.log('Successfully signed out ')
 					}

@@ -2,7 +2,7 @@ import { IonItemDivider, IonItemGroup, IonLabel } from '@ionic/react'
 import { sıcaklıklar, yıkamaProgramları } from '../../types/programlar'
 import SelectInput from '../SelectInput'
 
-export default function Yıkama({ errors, clearErrors, register }) {
+export const Yıkama = ({ errors, clearErrors, register }) => {
 	return (
 		<IonItemGroup>
 			<IonItemDivider>
@@ -14,3 +14,4 @@ export default function Yıkama({ errors, clearErrors, register }) {
 		</IonItemGroup>
 	)
 }
+export default Yıkama
