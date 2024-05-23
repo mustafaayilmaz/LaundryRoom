@@ -46,3 +46,32 @@
 .bakiye-col {
 	height: 55px;
 }
+.full-screen-image-container {
+	position: relative;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.full-screen-image {
+	width: 100%;
+	height: auto;
+	cursor: zoom-in;
+	transition: transform 0.2s ease-in-out;
+}
+
+.full-screen-image:active {
+	cursor: zoom-out;
+	transform: scale(2);
+}
+
+.close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	border-radius: 50%;
+}

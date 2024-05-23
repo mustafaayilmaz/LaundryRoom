@@ -18,7 +18,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const [info, setInfo] = useState([])
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
 
-	const [capturedImage, setCapturedImage] = useState(null)
+	const [capturedImage, setCapturedImage] = useState('')
 
 	if (loading) {
 		return <Loading />
@@ -76,21 +76,12 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 			})
 
 			// Ekran görüntüsü almadan önce
-			console.log('Before setCapturedImage:', image)
+			console.log('Before setCapturedImage:', image.base64String)
 
-			if (image && image.base64String) {
-				setCapturedImage(`data:image/jpeg;base64,${image.base64String}`)
-				console.log(capturedImage)
-			} else {
-				presentAlert({
-					header: 'Hata',
-					message: 'Resim alınırken bir hata oluştu. Lütfen tekrar deneyin.',
-					buttons: ['Tamam']
-				})
-			}
+			setCapturedImage(`data:image/${image.format};base64,${image.base64String}`)
 
 			// Ekran görüntüsü almadan sonra
-			console.log('After setCapturedImage:', capturedImage)
+			console.log('After setCapturedImage:', `data:image/${image.format};base64,${image.base64String}`)
 		} catch (error) {
 			console.error(error)
 			presentAlert({
@@ -121,7 +112,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<IonRow>
 						<IonCol style={{ display: 'flex', justifyContent: 'center' }} onClick={() => fetchUserInfo()}>
-							{capturedImage === null ? <img style={{ width: '125px', height: 'auto' }} onClick={takePicture} src={camasir_sepeti} alt="Çamaşır Sepeti" /> : <img style={{ width: '125px', height: 'auto' }} src={capturedImage} alt="Çamaşır Sepeti" />}
+							{capturedImage === '' ? <img style={{ width: '125px', height: 'auto' }} onClick={takePicture} src={camasir_sepeti} alt="Çamaşır Sepeti" /> : <img style={{ width: '125px', height: 'auto' }} src={capturedImage} alt="Çamaşır Sepeti" />}
 						</IonCol>
 					</IonRow>
 

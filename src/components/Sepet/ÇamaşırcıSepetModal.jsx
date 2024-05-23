@@ -1,13 +1,13 @@
-import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar } from '@ionic/react'
-import { Sepet } from '../../types/sepet'
-
-import React from 'react'
+import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { useState } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import firebaseClient from '../../lib/firebase/firebase'
+import { Sepet } from '../../types/sepet'
 import KurutmaChip from './helper/KurutmaChip'
 import TalebeChip from './helper/TalebeChip'
 import VarYokChip from './helper/VarYokChip'
 import YıkamaChip from './helper/YıkamaChip'
+
 /**
  *
  * @param {{sepet: Sepet}} param0
@@ -15,6 +15,8 @@ import YıkamaChip from './helper/YıkamaChip'
 export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepetOpen }) {
 	const [çamaşırMakineleri, çamaşırloading, çamaşırError] = useCollectionData(firebaseClient.firestore.collection('çamaşırMakineleri'))
 	const [kurutmaMakineleri, kurutmaloading, kurutmaError] = useCollectionData(firebaseClient.firestore.collection('kurutmaMakineleri'))
+	const [isImageOpen, setIsImageOpen] = useState(false)
+
 	return (
 		<IonModal isOpen={isSepetOpen}>
 			<IonHeader>
@@ -26,6 +28,12 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 				</IonToolbar>
 			</IonHeader>
 			<IonContent>
+				<IonRow>
+					<IonCol style={{ display: 'flex', justifyContent: 'center' }}>
+						<img style={{ width: '125px', height: 'auto', cursor: 'pointer' }} src={sepet.image} alt="Çamaşır Sepeti" onClick={() => setIsImageOpen(true)} />
+					</IonCol>
+				</IonRow>
+				{/* Existing content */}
 				<IonList lines="none">
 					<IonItem style={{ marginTop: '6px' }}>
 						<IonLabel>Sepet Sahibi</IonLabel>
@@ -202,6 +210,14 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 					></IonAlert>
 				)}
 			</IonContent>
+			<IonModal isOpen={isImageOpen}>
+				<div className="full-screen-image-container">
+					<img src={sepet.image} alt="Çamaşır Sepeti" className="full-screen-image" />
+					<IonButton className="close-button" onClick={() => setIsImageOpen(false)}>
+						X
+					</IonButton>
+				</div>
+			</IonModal>
 		</IonModal>
 	)
 }

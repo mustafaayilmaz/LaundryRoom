@@ -151,11 +151,20 @@ class Firebase {
 		}
 	}
 
-	async uploadFile(storagePath, file) {
+	async uploadFile(storagePath, base64Data) {
 		try {
+			// Base64 verisini Blob'a dönüştürme
+			const response = await fetch(base64Data)
+			const blob = await response.blob()
+
+			// Firebase Storage referansını oluşturma
 			let storageRef = this.storage.ref(storagePath)
-			storageRef = storageRef.child(storagePath)
-			const snapshot = await storageRef.put(file)
+			storageRef = storageRef.child(Date())
+
+			// Dosyayı yükleme
+			const snapshot = await storageRef.put(blob)
+
+			// Dosyanın indirilebilir URL'sini alma
 			const downloadURL = await snapshot.ref.getDownloadURL()
 			return downloadURL
 		} catch (error) {
