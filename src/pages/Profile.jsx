@@ -82,14 +82,14 @@ export const Profile = () => {
 					<IonItem>
 						<IonSelect label="Kullanıcı no seçiniz" placeholder="Kullanıcı No" value={choosed} onIonChange={e => setChoosed(e.detail.value)}>
 							{users &&
-								users.map(
-									(k, index) =>
-										k.rol === 'kullanıcı' && (
-											<IonSelectOption key={index} value={k.no}>
-												{k.no}
-											</IonSelectOption>
-										)
-								)}
+								users
+									.filter(user => user.rol === 'kullanıcı')
+									.sort((a, b) => a.no - b.no) // k.no değerine göre sıralama
+									.map((k, index) => (
+										<IonSelectOption key={index} value={k.no}>
+											{k.no}
+										</IonSelectOption>
+									))}
 						</IonSelect>
 					</IonItem>
 

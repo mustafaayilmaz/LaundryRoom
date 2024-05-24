@@ -213,7 +213,7 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 			<IonModal isOpen={isImageOpen}>
 				<div className="full-screen-image-container">
 					<img src={sepet.image} alt="Çamaşır Sepeti" className="full-screen-image" />
-					<IonButton className="close-button" onClick={() => setIsImageOpen(false)}>
+					<IonButton color={'tertiary'} style={{ color: 'black' }} className="close-button" onClick={() => setIsImageOpen(false)}>
 						X
 					</IonButton>
 				</div>
