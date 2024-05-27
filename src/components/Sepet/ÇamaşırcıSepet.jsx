@@ -50,7 +50,7 @@ export default function ÇamaşırcıSepet({ sepet, setIsSepetOpen, setSelectedS
 							<IonGrid>
 								<IonRow className="ion-justify-content-center ion-align-items-center">
 									<IonCol size="5" push=".5">
-										<img src={sepet.image} width={'75%'} height={'75%'} />{' '}
+										<img src={sepet.image} width={'75%'} height={'75%'} />
 									</IonCol>
 									<IonCol size="7">
 										<TarihChip tarih={new Date(sepet.tarih)} />
