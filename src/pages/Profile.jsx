@@ -1,6 +1,6 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAlert, IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
 
-import { buildOutline, moonOutline } from 'ionicons/icons'
+import { buildOutline, moonOutline, playOutline } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -23,6 +23,9 @@ export const Profile = () => {
 	const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
 	const [currentUser, setCurrentUser] = useState([])
 	const [selected, setSelected] = useState('çamaşırMakineleri')
+	const [updateMakine, setUpdateMakine] = useState('')
+	const [alertTrigger, setAlertTrigger] = useState(false)
+	const [mevcutDurum, setMevcutDurum] = useState('')
 	const [makineler, makienelerLoading, makinelerError, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection(selected))
 
 	useEffect(() => {
@@ -38,6 +41,17 @@ export const Profile = () => {
 
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
 	const goLogin = () => history.push('/login')
+
+	const [presentAlert] = useIonAlert()
+
+	const alert = (title, message) => {
+		presentAlert({
+			header: title,
+			message: message,
+			buttons: ['Tamam']
+		})
+	}
+
 	if (loading) {
 		return <Loading />
 	}
@@ -82,7 +96,7 @@ export const Profile = () => {
 			)}
 			<IonModal isOpen={settingsOpen}>
 				<IonHeader>
-					<IonToolbar>
+					<IonToolbar color="secondary">
 						<IonTitle>Makinelerin Durumları</IonTitle>
 						<IonButtons slot="end">
 							<IonButton onClick={() => setSettingsOpen(false)}>Kapat</IonButton>
@@ -103,7 +117,13 @@ export const Profile = () => {
 						{makineler &&
 							selected === 'çamaşırMakineleri' &&
 							makineler.map((makine, index) => (
-								<IonCard key={index} className="ion-align-items-center">
+								<IonCard
+									key={index}
+									className="ion-align-items-center"
+									onClick={() => {
+										setUpdateMakine(makine.no), setAlertTrigger(true), setMevcutDurum(makine.durum)
+									}}
+								>
 									<IonRow className="ion-align-items-center ion-justify-content-center">
 										<IonAvatar className="machine-avatar">
 											<img src={laundrymachine} />
@@ -133,7 +153,7 @@ export const Profile = () => {
 										{makine.durum === 'Çalışıyor' && (
 											<IonRow className="ion-justify-content-center ion-align-items-center">
 												<IonChip>
-													<IonIcon style={{ color: 'blue' }} icon={moonOutline}></IonIcon>
+													<IonIcon style={{ color: 'green' }} icon={playOutline}></IonIcon>
 													<IonLabel>Çalışıyor</IonLabel>
 												</IonChip>
 											</IonRow>
@@ -144,7 +164,13 @@ export const Profile = () => {
 						{makineler &&
 							selected === 'kurutmaMakineleri' &&
 							makineler.map((makine, index) => (
-								<IonCard key={index} className="ion-align-items-center">
+								<IonCard
+									key={index}
+									className="ion-align-items-center"
+									onClick={() => {
+										setUpdateMakine(makine.no), setAlertTrigger(true), setMevcutDurum(makine.durum)
+									}}
+								>
 									<IonRow className="ion-align-items-center ion-justify-content-center">
 										<IonAvatar className="machine-avatar">
 											<img src={laundrymachine} />
@@ -185,10 +211,45 @@ export const Profile = () => {
 					</>
 				</IonContent>
 			</IonModal>
+			<IonAlert
+				isOpen={alertTrigger}
+				onDidDismiss={() => setAlertTrigger(false)}
+				header="Makinenin Durumunu Seçiminiz"
+				buttons={[
+					{
+						text: 'Tamam',
+						handler: async durum => {
+							try {
+								if (selected !== '') {
+									if (mevcutDurum !== 'Çalışıyor') {
+										await firebaseClient.makineDurumGüncelle(selected, updateMakine, durum)
+									} else {
+										alert('Hata', 'Durumunu değiştirmek istediğiniz makinedeki çamaşırın bitmesini bekleyiniz!')
+									}
+								}
+							} catch (error) {
+								throw error
+							}
+						}
+					}
+				]}
+				inputs={[
+					{
+						label: 'Arızalı',
+						type: 'radio',
+						value: 'Arızalı'
+					},
+					{
+						label: 'Bekliyor',
+						type: 'radio',
+						value: 'Bekliyor'
+					}
+				]}
+			/>
 
 			<IonModal isOpen={isOpen}>
 				<IonHeader>
-					<IonToolbar>
+					<IonToolbar color="secondary">
 						<IonTitle>Bakiye Tanımlama</IonTitle>
 						<IonButtons slot="end">
 							<IonButton onClick={() => setIsOpen(false)}>Kapat</IonButton>

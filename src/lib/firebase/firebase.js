@@ -171,6 +171,27 @@ class Firebase {
 			throw error
 		}
 	}
+
+	async makineDurumGüncelle(selected, updateMakine, durum) {
+		try {
+			const ref = this.firestore.collection(selected)
+			const snapshot = await ref.where('no', '==', updateMakine).get()
+			const makine = snapshot.docs.map(m => {
+				return {
+					id: m.id,
+					...m.data()
+				}
+			})
+
+			if (makine.length > 0) {
+				await ref.doc(makine[0].id).update({
+					durum: durum
+				})
+			}
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 const firebaseClient = new Firebase()
