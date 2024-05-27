@@ -27,7 +27,7 @@ export const Home = () => {
 	}
 
 	return (
-		<Authorized key={makineler.no}>
+		<Authorized>
 			<IonSegment value={selected}>
 				<IonSegmentButton value="çamaşırMakineleri" onClick={() => setSelected('çamaşırMakineleri')}>
 					<IonLabel>Çamaşır Makinesi</IonLabel>

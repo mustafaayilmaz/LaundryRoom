@@ -1,9 +1,11 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 
+import { buildOutline, moonOutline } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router'
+import laundrymachine from '../../dist/laundrymachine.png'
 import Authorized from '../layouts/Authorized'
 import firebaseClient from '../lib/firebase/firebase'
 import Loading from './Loading'
@@ -13,22 +15,27 @@ export const Profile = () => {
 	const history = useHistory()
 
 	const [isOpen, setIsOpen] = useState(false)
+	const [settingsOpen, setSettingsOpen] = useState(false)
 	const [choosed, setChoosed] = useState('')
 	const [choosedUser, setChoosedUser] = useState([])
 	const [balance, setBalance] = useState('')
 	const [user, userLoading, userError] = useAuthState(firebaseClient.auth)
 	const [users, usersLoading, usersError] = useCollectionData(firebaseClient.firestore.collection('kullanıcılar'))
 	const [currentUser, setCurrentUser] = useState([])
+	const [selected, setSelected] = useState('çamaşırMakineleri')
+	const [makineler, makienelerLoading, makinelerError, snapshot, reload] = useCollectionData(firebaseClient.firestore.collection(selected))
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			const snapshot = await firebaseClient.firestore.collection('kullanıcılar').where('no', '==', choosed).get()
 			const getUser = await firebaseClient.firestore.collection('kullanıcılar').where('userUid', '==', user.uid).get()
-			getUser.docs.map(doc => setCurrentUser(doc.data(0)))
+			getUser.docs.map(doc => setCurrentUser(doc.data()))
 
-			snapshot.docs.map(doc => setChoosedUser(doc.data(0)))
+			snapshot.docs.map(doc => setChoosedUser(doc.data()))
 		}
 		fetchUser()
-	}, [choosed])
+	}, [choosed, user.uid])
+
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
 	const goLogin = () => history.push('/login')
 	if (loading) {
@@ -62,19 +69,129 @@ export const Profile = () => {
 			{user && (
 				<>
 					{user.displayName === 'çamaşırcı' && (
-						<IonButton expand="block" onClick={() => setIsOpen(true)}>
-							Bakiye Tanımla
-						</IonButton>
+						<>
+							<IonButton expand="block" onClick={() => setIsOpen(true)}>
+								Bakiye Tanımla
+							</IonButton>
+							<IonButton expand="block" onClick={() => setSettingsOpen(true)}>
+								Makineler
+							</IonButton>
+						</>
 					)}
 				</>
 			)}
+			<IonModal isOpen={settingsOpen}>
+				<IonHeader>
+					<IonToolbar>
+						<IonTitle>Makinelerin Durumları</IonTitle>
+						<IonButtons slot="end">
+							<IonButton onClick={() => setSettingsOpen(false)}>Kapat</IonButton>
+						</IonButtons>
+					</IonToolbar>
+				</IonHeader>
+				<IonContent>
+					<>
+						<IonSegment value={selected}>
+							<IonSegmentButton value={'çamaşırMakineleri'} onClick={() => setSelected('çamaşırMakineleri')}>
+								<IonLabel>Çamaşır Makineleri</IonLabel>
+							</IonSegmentButton>
+							<IonSegmentButton value={'kurutmaMakineleri'} onClick={() => setSelected('kurutmaMakineleri')}>
+								<IonLabel>Kurutma Makineleri</IonLabel>
+							</IonSegmentButton>
+						</IonSegment>
+
+						{makineler &&
+							selected === 'çamaşırMakineleri' &&
+							makineler.map((makine, index) => (
+								<IonCard key={index} className="ion-align-items-center">
+									<IonRow className="ion-align-items-center ion-justify-content-center">
+										<IonAvatar className="machine-avatar">
+											<img src={laundrymachine} />
+										</IonAvatar>
+										<IonCardHeader>
+											<IonCardTitle>{makine.no} Numara</IonCardTitle>
+											<IonCardSubtitle>Çamaşır Makinesi</IonCardSubtitle>
+										</IonCardHeader>
+									</IonRow>
+									<IonCardContent>
+										{makine.durum === 'Arızalı' && (
+											<IonRow className="ion-justify-content-center">
+												<IonChip>
+													<IonIcon style={{ color: 'red' }} icon={buildOutline}></IonIcon>
+													<IonLabel>Arızalı</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+										{makine.durum === 'Bekliyor' && (
+											<IonRow className="ion-justify-content-center">
+												<IonChip>
+													<IonIcon style={{ color: 'blue' }} icon={moonOutline}></IonIcon>
+													<IonLabel>Bekliyor</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+										{makine.durum === 'Çalışıyor' && (
+											<IonRow className="ion-justify-content-center ion-align-items-center">
+												<IonChip>
+													<IonIcon style={{ color: 'blue' }} icon={moonOutline}></IonIcon>
+													<IonLabel>Çalışıyor</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+									</IonCardContent>
+								</IonCard>
+							))}
+						{makineler &&
+							selected === 'kurutmaMakineleri' &&
+							makineler.map((makine, index) => (
+								<IonCard key={index} className="ion-align-items-center">
+									<IonRow className="ion-align-items-center ion-justify-content-center">
+										<IonAvatar className="machine-avatar">
+											<img src={laundrymachine} />
+										</IonAvatar>
+										<IonCardHeader>
+											<IonCardTitle>{makine.no} Numara</IonCardTitle>
+											<IonCardSubtitle>Kurutma Makinesi</IonCardSubtitle>
+										</IonCardHeader>
+									</IonRow>
+									<IonCardContent>
+										{makine.durum === 'Arızalı' && (
+											<IonRow className="ion-justify-content-center">
+												<IonChip>
+													<IonIcon style={{ color: 'red' }} icon={buildOutline}></IonIcon>
+													<IonLabel>Arızalı</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+										{makine.durum === 'Bekliyor' && (
+											<IonRow className="ion-justify-content-center">
+												<IonChip>
+													<IonIcon style={{ color: 'blue' }} icon={moonOutline}></IonIcon>
+													<IonLabel>Bekliyor</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+										{makine.durum === 'Çalışıyor' && (
+											<IonRow className="ion-justify-content-center ion-align-items-center">
+												<IonChip>
+													<IonIcon style={{ color: 'blue' }} icon={moonOutline}></IonIcon>
+													<IonLabel>Çalışıyor</IonLabel>
+												</IonChip>
+											</IonRow>
+										)}
+									</IonCardContent>
+								</IonCard>
+							))}
+					</>
+				</IonContent>
+			</IonModal>
 
 			<IonModal isOpen={isOpen}>
 				<IonHeader>
 					<IonToolbar>
 						<IonTitle>Bakiye Tanımlama</IonTitle>
 						<IonButtons slot="end">
-							<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+							<IonButton onClick={() => setIsOpen(false)}>Kapat</IonButton>
 						</IonButtons>
 					</IonToolbar>
 				</IonHeader>

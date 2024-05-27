@@ -175,9 +175,9 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 							}
 						]}
 						inputs={çamaşırMakineleri.map(makine => ({
-							label: `Çamaşır makinesi ${makine.no}`,
+							label: `Çamaşır Makinesi ${makine.no}`,
 							type: 'radio',
-							value: `Çamaşır makinesi ${makine.no}`,
+							value: `Çamaşır Makinesi ${makine.no}`,
 							disabled: makine.durum === 'Çalışıyor' || makine.durum === 'Arızalı'
 						}))}
 					></IonAlert>
@@ -202,9 +202,9 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 							}
 						]}
 						inputs={kurutmaMakineleri.map(makine => ({
-							label: `Çamaşır makinesi ${makine.no}`,
+							label: `Kurutma Makinesi ${makine.no}`,
 							type: 'radio',
-							value: `Çamaşır makinesi ${makine.no}`,
+							value: `Kurutma Makinesi ${makine.no}`,
 							disabled: makine.durum === 'Çalışıyor' || makine.durum === 'Arızalı'
 						}))}
 					></IonAlert>

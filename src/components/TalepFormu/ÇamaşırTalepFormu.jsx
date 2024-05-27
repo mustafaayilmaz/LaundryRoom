@@ -69,7 +69,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const takePicture = async () => {
 		try {
 			const image = await Camera.getPhoto({
-				quality: 90,
+				quality: 100,
 				allowEditing: true,
 				resultType: CameraResultType.Base64,
 				source: CameraSource.Prompt

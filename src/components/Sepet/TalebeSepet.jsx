@@ -24,7 +24,7 @@ export default function TalebeSepet({ sepet, selected }) {
 							<IonGrid>
 								<IonRow className="ion-justify-content-center ion-align-items-center">
 									<IonCol size="5" push=".5">
-										<img src={camasir_sepeti} width={'75%'} height={'75%'} />
+										<img src={sepet.image} width={'75%'} height={'75%'} />
 									</IonCol>
 
 									<IonCol size="7">
