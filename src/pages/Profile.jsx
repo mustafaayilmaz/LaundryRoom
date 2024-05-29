@@ -252,7 +252,13 @@ export const Profile = () => {
 					<IonToolbar color="secondary">
 						<IonTitle>Bakiye Tanımlama</IonTitle>
 						<IonButtons slot="end">
-							<IonButton onClick={() => setIsOpen(false)}>Kapat</IonButton>
+							<IonButton
+								onClick={() => {
+									setIsOpen(false), setChoosed('')
+								}}
+							>
+								Kapat
+							</IonButton>
 						</IonButtons>
 					</IonToolbar>
 				</IonHeader>
@@ -321,7 +327,7 @@ export const Profile = () => {
 					<IonButton
 						expand="block"
 						onClick={async () => {
-							await firebaseClient.bakiyeTanimlama(updatedBalance, choosedUser.userUid)
+							await firebaseClient.bakiyeTanimlama(updatedBalance, choosedUser.userUid), setChoosed('')
 						}}
 					>
 						Değişiklikleri Onayla
