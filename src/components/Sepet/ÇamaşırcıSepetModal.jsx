@@ -1,4 +1,4 @@
-import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAccordion, IonAccordionGroup, IonAlert, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
 import { useState } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import firebaseClient from '../../lib/firebase/firebase'
@@ -16,6 +16,14 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 	const [çamaşırMakineleri, çamaşırloading, çamaşırError] = useCollectionData(firebaseClient.firestore.collection('çamaşırMakineleri'))
 	const [kurutmaMakineleri, kurutmaloading, kurutmaError] = useCollectionData(firebaseClient.firestore.collection('kurutmaMakineleri'))
 	const [isImageOpen, setIsImageOpen] = useState(false)
+	const [presentAlert] = useIonAlert()
+	const alert = (title, message) => {
+		presentAlert({
+			header: title,
+			message: message,
+			buttons: ['Tamam']
+		})
+	}
 
 	return (
 		<IonModal isOpen={isSepetOpen}>
@@ -131,7 +139,12 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						<IonButton
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+								try {
+									await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+									alert('Uyarı', `${sepet.no} nolu kullanıcının çamaşırı bitti.`)
+								} catch (error) {
+									alert('Hata', error)
+								}
 							}}
 						>
 							Çamaşırı Bitir
@@ -150,7 +163,12 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 							disabled="none"
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+								try {
+									await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+									alert('Uyarı', `${sepet.no} nolu kullanıcının çamaşırı bitti.`)
+								} catch (error) {
+									alert('Hata', error)
+								}
 							}}
 						>
 							Çamaşırı Bitir
@@ -166,10 +184,10 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 								text: 'Tamam',
 								handler: async makineId => {
 									try {
-										console.log(makineId)
 										await firebaseClient.çamaşırMakinesineAta(sepet.id, makineId), setIsSepetOpen(false)
+										alert('Uyarı', `${sepet.no} nolu kullanıcının sepeti ${makineId}'e atıldı.`)
 									} catch (error) {
-										console.log(error)
+										alert('Hata', error)
 									}
 								}
 							}
@@ -192,9 +210,9 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 								text: 'Tamam',
 								handler: async makineId => {
 									try {
-										console.log(makineId)
 										await firebaseClient.kurutmaMakinesineAta(sepet.id, makineId)
 										setIsSepetOpen(false)
+										alert('Uyarı', `${sepet.no} nolu kullanıcının sepeti ${makineId}'e atıldı.`)
 									} catch (error) {
 										console.log(error)
 									}

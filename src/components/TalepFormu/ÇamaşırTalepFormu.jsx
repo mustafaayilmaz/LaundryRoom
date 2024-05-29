@@ -14,11 +14,19 @@ import Yıkama from './Yıkama'
 
 export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 	const [user, loading, userError] = useAuthState(firebaseClient.auth)
-	const [presentAlert] = useIonAlert()
+
 	const [info, setInfo] = useState([])
 	const [toplamÜcret, setToplamÜcret] = useState(ücret.taban)
 
 	const [capturedImage, setCapturedImage] = useState('')
+	const [presentAlert] = useIonAlert()
+	const alert = (title, message) => {
+		presentAlert({
+			header: title,
+			message: message,
+			buttons: ['Tamam']
+		})
+	}
 
 	if (loading) {
 		return <Loading />
@@ -61,6 +69,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 			})
 			console.log((await doc.get()).data())
 			setIsOpen(false)
+			alert('Uyarı', 'Çamaşır talebiniz başarıyla oluşturuldu.')
 		} catch (error) {
 			console.error(error)
 		}

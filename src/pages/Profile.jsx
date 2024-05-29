@@ -327,7 +327,12 @@ export const Profile = () => {
 					<IonButton
 						expand="block"
 						onClick={async () => {
-							await firebaseClient.bakiyeTanimlama(updatedBalance, choosedUser.userUid), setChoosed('')
+							try {
+								await firebaseClient.bakiyeTanimlama(updatedBalance, choosedUser.userUid), setChoosed('')
+								alert('Uyarı', `${choosed} nolu kullanıcıya ${balance}₺ bakiye yüklendi.`)
+							} catch (error) {
+								alert('Hata', error)
+							}
 						}}
 					>
 						Değişiklikleri Onayla
