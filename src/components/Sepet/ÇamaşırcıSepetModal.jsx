@@ -121,7 +121,12 @@ export default function ÇamaşırcıSepetModal({ sepet, isSepetOpen, setIsSepet
 						<IonButton
 							expand="block"
 							onClick={async () => {
-								await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+								try {
+									await firebaseClient.çamaşırıBitir(sepet.id), setIsSepetOpen(false)
+									alert('Uyarı', `${sepet.no} nolu kullanıcının çamaşırı bitti.`)
+								} catch (error) {
+									alert('Hata', error)
+								}
 							}}
 						>
 							Çamaşırı Bitir
