@@ -67,7 +67,6 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				no: info.no,
 				image: downloadURL
 			})
-			console.log((await doc.get()).data())
 			setIsOpen(false)
 			alert('Uyarı', 'Çamaşır talebiniz başarıyla oluşturuldu.')
 		} catch (error) {
@@ -84,13 +83,7 @@ export default function ÇamaşırTalepFormu({ isOpen, setIsOpen }) {
 				source: CameraSource.Prompt
 			})
 
-			// Ekran görüntüsü almadan önce
-			console.log('Before setCapturedImage:', image.base64String)
-
 			setCapturedImage(`data:image/${image.format};base64,${image.base64String}`)
-
-			// Ekran görüntüsü almadan sonra
-			console.log('After setCapturedImage:', `data:image/${image.format};base64,${image.base64String}`)
 		} catch (error) {
 			console.error(error)
 			presentAlert({

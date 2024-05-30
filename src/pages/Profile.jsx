@@ -37,7 +37,7 @@ export const Profile = () => {
 			snapshot.docs.map(doc => setChoosedUser(doc.data()))
 		}
 		fetchUser()
-	}, [choosed, user.uid])
+	}, [choosed])
 
 	const updatedBalance = parseFloat(balance) + parseFloat(choosedUser.bakiye)
 	const goLogin = () => history.push('/login')
@@ -342,10 +342,12 @@ export const Profile = () => {
 			<IonButton
 				expand="block"
 				onClick={async () => {
-					const success = await signOut()
-					goLogin()
-					if (success) {
-						console.log('Successfully signed out ')
+					try {
+						const success = await signOut()
+						goLogin()
+						alert('Uyarı', 'Hesabınızdan başarıyla çıkış yapıldı.')
+					} catch (error) {
+						alert('Hata', error)
 					}
 				}}
 			>
